@@ -9,7 +9,7 @@ public class RhinoMovementScript : MonoBehaviour
     Transform player;
     Animator animator;
     bool playerFound = false;
-    bool isAlive = true;
+    public EnemyHPScript hp_script;
 
 
     void Start()
@@ -17,18 +17,24 @@ public class RhinoMovementScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //playerFound = true;
+        playerFound = true;
         animator.Play("Eats");
     }
 
     void Update()
     {
-        if (isAlive)
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (hp_script.isAlive)
         {
             if (playerFound)
             {
                 ChasePlayer();
             }
+        }
+        else
+        {
+            agent.isStopped = true;
+            animator.StopPlayback();
         }
         
     }
@@ -62,18 +68,7 @@ public class RhinoMovementScript : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    void getHit()
-    {
-        // reduce HP
-        animator.Play("Get_Hit");
-    }
 
-
-    void Dead()
-    {
-        isAlive = false;
-        animator.Play("Dead");
-        Destroy(gameObject, 5f);
-    }
+    
 
 }

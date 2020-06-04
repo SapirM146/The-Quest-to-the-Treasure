@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityStandardAssets.Characters.FirstPerson;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerGunScript : MonoBehaviour
 {
@@ -41,7 +41,7 @@ public class PlayerGunScript : MonoBehaviour
         // Make shoot animation
 
         // Decrease enemy HP 
-        // enemy.hitDamage(0.3f);
+        // enemy.takeDamage(30);
     }
 
     void checkGround(GameObject player)
@@ -57,19 +57,19 @@ public class PlayerGunScript : MonoBehaviour
     {
         if (inAimMode)
         {
-            fpsCharacter.transform.position = tpsCharacter.transform.position + new Vector3(0, 0.15f, 0);
-            fpsCharacter.transform.rotation = tpsCharacter.transform.rotation;
             checkGround(fpsCharacter);
             checkGround(tpsCharacter);
+            fpsCharacter.transform.position = tpsCharacter.transform.position + new Vector3(0, 0.15f, 0);
+            fpsCharacter.transform.rotation = tpsCharacter.transform.rotation;
             tpsCharacter.SetActive(false);
             fpsCharacter.SetActive(true);
         }
         else
         {
-            tpsCharacter.transform.position = fpsCharacter.transform.position - offset;
-            tpsCharacter.transform.rotation = fpsCharacter.transform.rotation;
             checkGround(fpsCharacter);
             checkGround(tpsCharacter);
+            tpsCharacter.transform.position = fpsCharacter.transform.position - offset;
+            tpsCharacter.transform.rotation = fpsCharacter.transform.rotation;
             fpsCharacter.SetActive(false);
             tpsCharacter.SetActive(true);
         }

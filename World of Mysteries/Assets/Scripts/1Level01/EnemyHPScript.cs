@@ -1,17 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHPScript : MonoBehaviour
 {
-    public float hp;
     Animator animator;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBarScript healthBar;
+    public bool isAlive = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        hp = 1f;
+        currentHealth = maxHealth;
+        healthBar.setMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -20,9 +26,24 @@ public class EnemyHPScript : MonoBehaviour
         
     }
 
-    public void hitDamage(float damage)
+    public void takeDamage(int damage)
     {
-        animator.Play("Get_Hit");
-        hp -= damage;
+        if (currentHealth > 0)
+        {
+            animator.Play("Get_Hit");
+            currentHealth -= damage;
+            healthBar.setHealth(currentHealth);
+        }
+
+        if (currentHealth <= 0)
+            die();
+    }
+
+
+    void die()
+    {
+        isAlive = false;
+        animator.Play("Dead");
+        Destroy(gameObject, 5f);
     }
 }
