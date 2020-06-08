@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class PlayerHPScript : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth;
+    private int currentHealth;
+    public int CurrentHealth
+    {
+        get { return currentHealth; }
+    }
     public HealthBarScript healthBar;
 
     // Start is called before the first frame update
@@ -19,8 +23,7 @@ public class PlayerHPScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            takeDamage(20);
+
     }
 
     public void takeDamage(int damage)

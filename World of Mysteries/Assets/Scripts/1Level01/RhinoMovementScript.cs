@@ -8,8 +8,14 @@ public class RhinoMovementScript : MonoBehaviour
     NavMeshAgent agent;
     Transform player;
     Animator animator;
+    Coroutine attack;
     bool playerFound = false;
+    bool playerChase = false;
+    bool playerAttacked = false;
+    public float range = 30f;
+
     public EnemyHPScript hp_script;
+    public PlayerHPScript playerHP;
 
 
     void Start()
@@ -17,18 +23,31 @@ public class RhinoMovementScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerFound = true;
-        animator.Play("Eats");
+        //StartCoroutine(foundPlayer());
+        //animator.Play("Eats");
     }
 
     void Update()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
         if (hp_script.isAlive)
         {
-            if (playerFound)
+            RaycastHit hit;
+
+            if (playerChase)
             {
                 ChasePlayer();
+            }
+
+            else if (!playerFound && Physics.Raycast(transform.position, transform.forward, out hit, range))
+            {
+                if (hit.transform.CompareTag("Player"))
+                {
+                    Debug.Log("found");
+                    StartCoroutine(foundPlayer());
+                    playerFound = true;
+                }
             }
         }
         else
@@ -36,14 +55,19 @@ public class RhinoMovementScript : MonoBehaviour
             agent.isStopped = true;
             animator.StopPlayback();
         }
-        
+
     }
 
-    void foundPlayer()
+    IEnumerator foundPlayer()
     {
+        transform.LookAt(player);
         animator.Play("shout");
-        playerFound = true;
+
+        yield return new WaitForSeconds(1f);
+
+        playerChase = true;
     }
+
 
     void ChasePlayer()
     {
@@ -51,8 +75,14 @@ public class RhinoMovementScript : MonoBehaviour
 
         if (dis <= agent.stoppingDistance)
         {
-            transform.LookAt(player);
-            animator.Play("Attack");
+            agent.speed = 0f;
+            animator.SetBool("Run", false);
+            if (!playerAttacked)
+            {
+                playerAttacked = true;
+                attack = StartCoroutine(attackPlayer());
+            }
+
         }
         //else if (dis < agent.stoppingDistance + 5)
         //{
@@ -61,14 +91,38 @@ public class RhinoMovementScript : MonoBehaviour
         //}
         else
         {
+            if (playerAttacked)
+            {
+                playerAttacked = false;
+                StopCoroutine(attack);
+                //StopCoroutine(attackPlayer());
+            }
+            animator.SetBool("Run", true);
             agent.speed = 3.5f;
-            animator.SetTrigger("Run");
+
         }
 
         agent.SetDestination(player.position);
     }
 
+    IEnumerator attackPlayer()
+    {
+        transform.LookAt(player);
+        animator.Play("Attack", -1, 0f);
+        playerHP.takeDamage(10);
 
-    
+        yield return new WaitForSeconds(2f);
+
+        playerAttacked = false;
+
+    }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.transform.CompareTag("Player"))
+    //    {
+    //        playerHP.takeDamage(10);
+    //    }
+    //}
 
 }

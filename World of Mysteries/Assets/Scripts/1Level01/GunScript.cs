@@ -5,19 +5,17 @@ public class GunScript : MonoBehaviour
 
     public int damage = 10;
     public float range = 30f;
-    public float fireRate = 15f;
+
     public Camera fpsCam;
     public ParticleSystem muzzleFlash;
-    public ParticleSystem impactEffect;
+    public GameObject impactEffect;
 
-    private float nextTimeToFire = 0f;
+    
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+        if (Input.GetMouseButtonDown(0))
         {
-            nextTimeToFire = Time.time + 1f / fireRate;
             shoot();
         }
     }
@@ -34,7 +32,7 @@ public class GunScript : MonoBehaviour
             {
                 target.takeDamage(damage);
             }
-            ParticleSystem impactGO2 = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            GameObject impactGO2 = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGO2, 2f);
         }
     }

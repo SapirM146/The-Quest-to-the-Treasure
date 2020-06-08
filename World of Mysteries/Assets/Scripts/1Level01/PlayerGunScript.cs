@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
 
-public class PlayerGunScript : MonoBehaviour
+public class PlayerAimModeScript : MonoBehaviour
 {
 
-    //public RigidbodyFirstPersonController fps;
     public GameObject fpsCharacter;
     public GameObject tpsCharacter;
 
@@ -28,20 +25,6 @@ public class PlayerGunScript : MonoBehaviour
             inAimMode = !inAimMode;
             aimMode();
         }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if(inAimMode)
-                shoot();
-        }
-    }
-
-    private void shoot()
-    {
-        // Make shoot animation
-
-        // Decrease enemy HP 
-        // enemy.takeDamage(30);
     }
 
     void checkGround(GameObject player)

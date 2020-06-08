@@ -17,7 +17,7 @@ public class EndMenuScript : MonoBehaviour
         SceneManager.LoadScene(1); // return to first level
     }
 
-    public void ExitGame()
+    public static void ExitGame()
     {
         Application.Quit();
     }
