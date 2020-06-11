@@ -9,7 +9,7 @@ public class Game_Manager : MonoBehaviour
 {
     public PlayerHPScript playerHP;
     public GameObject loseMenu;
-    public PauseMenuScript pauseMenu;
+    public L1PauseMenuScript pauseMenu;
     bool isLevelEnded = false;
     int numOfEnemies;
 
@@ -70,11 +70,13 @@ public class Game_Manager : MonoBehaviour
 
     public void RestartLevel()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToMainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 }

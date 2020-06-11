@@ -34,12 +34,12 @@ public class RhinoMovementScript : MonoBehaviour
         if (hp_script.isAlive)
         {
             RaycastHit hit;
+            Debug.DrawRay(transform.position, transform.forward, Color.blue);
 
             if (playerChase)
             {
                 ChasePlayer();
             }
-
             else if (!playerFound && Physics.Raycast(transform.position, transform.forward, out hit, range))
             {
                 if (hit.transform.CompareTag("Player"))
@@ -72,10 +72,12 @@ public class RhinoMovementScript : MonoBehaviour
     void ChasePlayer()
     {
         float dis = Vector3.Distance(transform.position, player.position);
+        Debug.Log(dis);
 
         if (dis <= agent.stoppingDistance)
         {
-            agent.speed = 0f;
+            //agent.velocity = Vector3.zero;
+            //Debug.Log(agent.velocity.magnitude);
             animator.SetBool("Run", false);
             if (!playerAttacked)
             {
@@ -98,7 +100,7 @@ public class RhinoMovementScript : MonoBehaviour
                 //StopCoroutine(attackPlayer());
             }
             animator.SetBool("Run", true);
-            agent.speed = 3.5f;
+            //agent.speed = 3.5f;
 
         }
 
@@ -109,7 +111,7 @@ public class RhinoMovementScript : MonoBehaviour
     {
         transform.LookAt(player);
         animator.Play("Attack", -1, 0f);
-        playerHP.takeDamage(10);
+        //playerHP.takeDamage(10);
 
         yield return new WaitForSeconds(2f);
 

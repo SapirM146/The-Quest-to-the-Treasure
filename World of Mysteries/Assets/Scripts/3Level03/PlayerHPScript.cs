@@ -23,7 +23,7 @@ public class PlayerHPScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void takeDamage(int damage)
