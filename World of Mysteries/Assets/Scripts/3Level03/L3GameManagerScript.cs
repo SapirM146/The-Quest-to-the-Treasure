@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class Game_Manager : MonoBehaviour
+public class L3GameManagerScript : MonoBehaviour
 {
     public PlayerHPScript playerHP;
     public GameObject loseMenu;
-    public L1PauseMenuScript pauseMenu;
+    public L3PauseMenuScript pauseMenu;
     bool isLevelEnded = false;
     int numOfEnemies;
 
@@ -32,7 +32,7 @@ public class Game_Manager : MonoBehaviour
                 StartCoroutine(loseLevel());
             }
 
-            if (numOfEnemies == 0)
+            else if (numOfEnemies == 0)
             {
                 isLevelEnded = true;
                 StartCoroutine(winLevel());

@@ -6,6 +6,7 @@ public class ChestOpenScript : MonoBehaviour
 {
     public AudioClip chestClip;
     public Transform treasureChestBox;
+    public L2GameManagerScript gm;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +14,8 @@ public class ChestOpenScript : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(chestClip, transform.position);
             treasureChestBox.GetComponent<Animation>().Play();
-            Destroy(gameObject);
+            gm.foundChest();
+            Destroy(treasureChestBox.gameObject, 2f);
         }
     }
 }

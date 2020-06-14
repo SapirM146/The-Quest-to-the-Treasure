@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class L1PauseMenuScript : MonoBehaviour
+public class L3PauseMenuScript : MonoBehaviour
 {
     public static bool isGamePaused = false;
     public GameObject pauseMenu;

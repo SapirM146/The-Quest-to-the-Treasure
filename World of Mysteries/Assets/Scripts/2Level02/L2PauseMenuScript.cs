@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class PauseMenuScript : MonoBehaviour
+public class L2PauseMenuScript : MonoBehaviour
 {
     public static bool isGamePaused = false;
     public static bool isGameStarted = false;
 
     public GameObject instructionPanel;
     public GameObject pauseMenu;
+    public GameObject ChestsCollectedPanel;
+    public GameObject EnemiesDefeatedPanel;
     public FirstPersonController fps;
     BoatShottingScript shootingAbility;
     SwitchModeScript modeSwitch;
@@ -28,6 +30,8 @@ public class PauseMenuScript : MonoBehaviour
         {
             GetComponent<AudioSource>().Play();
             instructionPanel.SetActive(false);
+            ChestsCollectedPanel.SetActive(true);
+            EnemiesDefeatedPanel.SetActive(true);
             resume();
             isGameStarted = true;
         }
@@ -72,6 +76,6 @@ public class PauseMenuScript : MonoBehaviour
 
     public void surrender()
     {
-        GameManagerScript.gameOver();
+        L2GameManagerScript.GoToMainMenu();
     }
 }
