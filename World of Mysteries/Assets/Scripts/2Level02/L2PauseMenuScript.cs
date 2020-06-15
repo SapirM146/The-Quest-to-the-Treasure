@@ -74,8 +74,4 @@ public class L2PauseMenuScript : MonoBehaviour
         isGamePaused = true;
     }
 
-    public void surrender()
-    {
-        L2GameManagerScript.GoToMainMenu();
-    }
 }

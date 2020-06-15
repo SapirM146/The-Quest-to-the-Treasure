@@ -6,7 +6,7 @@ public class TriggerFinishGameScript : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerBody"))
+        if (other.CompareTag("Player"))
         {
             L2GameManagerScript.playerInEndZone = true;
         }
@@ -14,7 +14,7 @@ public class TriggerFinishGameScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerBody"))
+        if (other.CompareTag("Player"))
         {
             L2GameManagerScript.playerInEndZone = false;
         }

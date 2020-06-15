@@ -10,21 +10,27 @@ public class L2GameManagerScript : MonoBehaviour
     public static PlayerHPScript playerHP;
     public L2PauseMenuScript pauseMenu;
     public GameObject loseMenu;
+    public GameObject winMenu;
+    public GameObject GPS_Arrow;
+    public Text ChestsCollectedText;
+    public Text EnemiesDefeatedText;
+
 
     int numOfChestsFound = 0;
     readonly int numOfChests = 3;
     int numOfEnemies;
+    int numOfEnemiesLeft;
 
     bool isLevelEnded = false;
-    bool allChestFounded = false;
-    bool allEnemiesDefeted = false;
+    bool allChestFounded = false; // false
+    bool allEnemiesDefeated = false; // false
     public static bool playerInEndZone = false;
 
     private void Start()
     {
         playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHPScript>();
         numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
+        numOfEnemiesLeft = numOfEnemies;
     }
 
     // Update is called once per frame
@@ -32,12 +38,11 @@ public class L2GameManagerScript : MonoBehaviour
     {
         if (!isLevelEnded)
         {
-            int temp = GameObject.FindGameObjectsWithTag("Enemy").Length;
-            if (!allEnemiesDefeted && temp != numOfEnemies)
-                numOfEnemies = temp;
+            updateNumOfEnemiesLeft();
+            updatePanel(ref numOfChestsFound, numOfChests, allChestFounded, ref ChestsCollectedText);
+            updatePanel(ref numOfEnemiesLeft, numOfEnemies, allEnemiesDefeated, ref EnemiesDefeatedText);
 
             int hp = playerHP.CurrentHealth;
-            //hp_bar.fillAmount = hp;
 
             if (hp <= 0)
             {
@@ -45,10 +50,15 @@ public class L2GameManagerScript : MonoBehaviour
                 StartCoroutine(loseLevel());
             }
 
-            else if (playerInEndZone && allEnemiesDefeted && allChestFounded)
+            else if (playerInEndZone && allEnemiesDefeated && allChestFounded)
             {
                 isLevelEnded = true;
                 StartCoroutine(winLevel());
+            }
+
+            else if (!GPS_Arrow.activeInHierarchy && allEnemiesDefeated && allChestFounded)
+            {
+                GPS_Arrow.SetActive(true);
             }
         }
     }
@@ -58,6 +68,35 @@ public class L2GameManagerScript : MonoBehaviour
         numOfChestsFound++;
         if (numOfChestsFound == numOfChests)
             allChestFounded = true;
+    }
+
+    void updateNumOfEnemiesLeft()
+    {
+        if(!allEnemiesDefeated)
+        {
+            int temp = GameObject.FindGameObjectsWithTag("Enemy").Length;
+            
+            if (temp != numOfEnemies)
+                numOfEnemiesLeft = temp;
+            
+            if (numOfEnemiesLeft == 0)
+            {
+                allEnemiesDefeated = true;
+            }         
+        } 
+    }
+
+    void updatePanel(ref int currentNum, int targetNum, bool isDone, ref Text textPanel)
+    {
+        string temptext = currentNum + " / " + targetNum;
+
+        if (isDone)
+        {
+            temptext += " DONE!";
+            textPanel.color = Color.green;
+        }
+
+        textPanel.text = temptext;
     }
 
     IEnumerator loseLevel()
@@ -79,11 +118,20 @@ public class L2GameManagerScript : MonoBehaviour
 
     IEnumerator winLevel()
     {
-        // show lose message
-        Debug.Log("Win");
+        pauseMenu.enabled = false;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
+        Cursor.lockState = CursorLockMode.None; // unlock cursor
+        Cursor.visible = true; // show curser
+        Time.timeScale = 0f; // stop time
+        winMenu.SetActive(true); // show win menu
+
+    }
+
+    public void GoToNextLevel()
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -93,7 +141,7 @@ public class L2GameManagerScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public static void GoToMainMenu()
+    public void GoToMainMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);

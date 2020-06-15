@@ -6,17 +6,14 @@ using UnityEngine.UI;
 public class PlayerHPScript : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
-    public int CurrentHealth
-    {
-        get { return currentHealth; }
-    }
+
+    public int CurrentHealth { get; private set; }
     public HealthBarScript healthBar;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
         healthBar.setMaxHealth(maxHealth);
     }
 
@@ -28,7 +25,7 @@ public class PlayerHPScript : MonoBehaviour
 
     public void takeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthBar.setHealth(currentHealth);
+        CurrentHealth -= damage;
+        healthBar.setHealth(CurrentHealth);
     }
 }

@@ -1,15 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Cameras;
 
 public class SwitchModeScript : MonoBehaviour
 {
     public GameObject boat;
     public GameObject boatCamera;
+
+    AutoCam autoCam;
+    FreeLookCam freeCam;
+
     public GameObject fps;
     public GameObject fpsStartPosition;
 
     public static bool isBoatMode = true;
+    public static bool isFreeCamMode = false;
+
+    private void Start()
+    {
+        autoCam = boatCamera.GetComponent<AutoCam>();
+        freeCam = boatCamera.GetComponent<FreeLookCam>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -33,6 +45,13 @@ public class SwitchModeScript : MonoBehaviour
             fps.transform.position = fpsStartPosition.transform.position;
             fps.SetActive(true);
             isBoatMode = false;
+        }
+
+        if (isBoatMode && Input.GetKeyUp(KeyCode.C))
+        {
+            isFreeCamMode = !isFreeCamMode;
+            autoCam.enabled = !isFreeCamMode;
+            freeCam.enabled = isFreeCamMode;
         }
     }
 }

@@ -30,7 +30,8 @@ public class EnemyHPScript : MonoBehaviour
     {
         if (currentHealth > 0)
         {
-            animator.Play("Get_Hit");
+            if(animator != null)
+                animator.Play("Get_Hit");
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
         }
@@ -43,7 +44,9 @@ public class EnemyHPScript : MonoBehaviour
     void die()
     {
         isAlive = false;
-        animator.Play("Dead");
-        Destroy(gameObject, 5f);
+        if (animator != null)
+            animator.Play("Dead");
+
+        Destroy(gameObject, 3f);
     }
 }

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - EnemyBody
+  - FoundPlayer
+  - LostPlayer
+  - PlayerBody
   layers:
   - Default
   - TransparentFX
@@ -14,8 +18,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - GPS
+  - Prop
   - 
   - 
   - 

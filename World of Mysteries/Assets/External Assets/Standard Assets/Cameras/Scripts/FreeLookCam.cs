@@ -52,11 +52,11 @@ namespace UnityStandardAssets.Cameras
         }
 
 
-        private void OnDisable()
+        /*private void OnDisable()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        }
+        }*/
 
 
         protected override void FollowTarget(float deltaTime)
