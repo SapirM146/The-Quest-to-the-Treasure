@@ -78,7 +78,9 @@ public class RhinoMovementScript : MonoBehaviour
         {
             //agent.velocity = Vector3.zero;
             //Debug.Log(agent.velocity.magnitude);
-            animator.SetBool("Run", false);
+            
+            
+                //animator.SetBool("Run", false);
             if (!playerAttacked)
             {
                 playerAttacked = true;
@@ -99,7 +101,7 @@ public class RhinoMovementScript : MonoBehaviour
                 StopCoroutine(attack);
                 //StopCoroutine(attackPlayer());
             }
-            animator.SetBool("Run", true);
+                //animator.SetBool("Run", true);
             //agent.speed = 3.5f;
 
         }

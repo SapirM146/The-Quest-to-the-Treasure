@@ -39,8 +39,8 @@ public class L2GameManagerScript : MonoBehaviour
         if (!isLevelEnded)
         {
             updateNumOfEnemiesLeft();
-            updatePanel(ref numOfChestsFound, numOfChests, allChestFounded, ref ChestsCollectedText);
-            updatePanel(ref numOfEnemiesLeft, numOfEnemies, allEnemiesDefeated, ref EnemiesDefeatedText);
+            updatePanel(ref numOfChestsFound, allChestFounded, ref ChestsCollectedText, numOfChests);
+            updatePanel(ref numOfEnemiesLeft, allEnemiesDefeated, ref EnemiesDefeatedText);
 
             int hp = playerHP.CurrentHealth;
 
@@ -86,9 +86,17 @@ public class L2GameManagerScript : MonoBehaviour
         } 
     }
 
-    void updatePanel(ref int currentNum, int targetNum, bool isDone, ref Text textPanel)
+    void updatePanel(ref int currentNum, bool isDone, ref Text textPanel, int targetNum = -1)
     {
-        string temptext = currentNum + " / " + targetNum;
+        string temptext;
+        if (targetNum != -1)
+        {
+            temptext = currentNum + " / " + targetNum;
+        }
+        else
+        {
+            temptext = currentNum.ToString();
+        }
 
         if (isDone)
         {

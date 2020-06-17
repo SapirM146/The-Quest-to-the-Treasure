@@ -18,6 +18,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
     public bool isPlayerDetected = false;
     float maxDistance = 100f;
     float lostDistance;
+    int layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
 
     public Animator foundTextAnim;
     public Animator lostTextAnim;
@@ -25,7 +26,6 @@ public class EnemyBoatMotionScript : MonoBehaviour
 
     private void Start()
     {
-        //rb = GetComponent<Rigidbody>();
         lostDistance = maxDistance + 20f;
         agent = GetComponent<NavMeshAgent>();
         hp = GetComponent<EnemyHPScript>();
@@ -46,7 +46,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
         else
         {
             agent.enabled = false;
-            Instantiate(explosion, transform.position + new Vector3(0, 4, 0), Quaternion.identity);
+            Instantiate(explosion, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
             this.enabled = false;
         }
     }
@@ -69,7 +69,8 @@ public class EnemyBoatMotionScript : MonoBehaviour
             sight.origin = transform.position;
             sight.direction = transform.forward;
 
-            if (Physics.Raycast(sight, out rayHit, maxDistance))
+            //if (Physics.SphereCast(sight, sphereRadius, out rayHit, sphereDis, layerMask))
+            if (Physics.Raycast(sight, out rayHit, maxDistance, layerMask))
             {
                 Debug.DrawLine(sight.origin, rayHit.point, Color.red);
                 //if (!isPlayerDetected && rayHit.collider.CompareTag("PlayerBody"))
@@ -89,9 +90,9 @@ public class EnemyBoatMotionScript : MonoBehaviour
                 float playerDis = Vector3.Distance(player.position, transform.position);
                 //float playerDis = agent.remainingDistance;
 
-                Debug.Log("remainingDistance To player: " + agent.remainingDistance);
-                Debug.Log("playerDis To player: " + playerDis);
-                Debug.Log("stoping To player: " + agent.stoppingDistance);
+                //Debug.Log("remainingDistance To player: " + agent.remainingDistance);
+                //Debug.Log("playerDis To player: " + playerDis);
+                //Debug.Log("stoping To player: " + agent.stoppingDistance);
                 //Debug.Log("player pos: " + player.position);
 
                 if (playerDis <= agent.stoppingDistance)
@@ -115,6 +116,5 @@ public class EnemyBoatMotionScript : MonoBehaviour
             }
         }
     }
-
 }
 

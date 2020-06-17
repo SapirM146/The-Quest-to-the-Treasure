@@ -37,11 +37,12 @@ public class BulletScript : MonoBehaviour
     {
         if (origin.CompareTag("Player"))
         {
-            if (other.CompareTag("EnemyBody"))
+            //if (other.CompareTag("EnemyBody"))
+            if (other.CompareTag("Enemy"))
             {
                 cannonSound.Play();
-                //other.GetComponent<EnemyHPScript>().takeDamage(20);
-                other.GetComponent<EnemyBoatPartScript>().MainPartHP.takeDamage(20);
+                other.GetComponent<EnemyHPScript>().takeDamage(20);
+                //other.GetComponent<EnemyBoatPartScript>().MainPartHP.takeDamage(20);
                 //Destroy(other.gameObject);
             }
         }
