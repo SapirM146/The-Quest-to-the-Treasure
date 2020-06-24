@@ -10,6 +10,7 @@ public class SwitchModeScript : MonoBehaviour
 
     AutoCam autoCam;
     FreeLookCam freeCam;
+    Rigidbody boatRB;
 
     public GameObject fps;
     public GameObject fpsStartPosition;
@@ -21,6 +22,7 @@ public class SwitchModeScript : MonoBehaviour
     {
         autoCam = boatCamera.GetComponent<AutoCam>();
         freeCam = boatCamera.GetComponent<FreeLookCam>();
+        boatRB = boat.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -29,7 +31,8 @@ public class SwitchModeScript : MonoBehaviour
         // Boat Mode
         if (Input.GetKeyUp("1"))
         {
-            boat.GetComponent<Rigidbody>().isKinematic = false;
+            boat.GetComponent<CapsuleCollider>().isTrigger = false;
+            boatRB.isKinematic = false;
             boat.GetComponent<BoatMotionScript>().enabled = true;
             boatCamera.SetActive(true);
             fps.SetActive(false);
@@ -39,7 +42,8 @@ public class SwitchModeScript : MonoBehaviour
         // FPS Mode
         if (Input.GetKeyUp("2"))
         {
-            boat.GetComponent<Rigidbody>().isKinematic = true;
+            boat.GetComponent<CapsuleCollider>().isTrigger = true;
+            boatRB.isKinematic = true;
             boat.GetComponent<BoatMotionScript>().enabled = false;
             boatCamera.SetActive(false);
             fps.transform.position = fpsStartPosition.transform.position;

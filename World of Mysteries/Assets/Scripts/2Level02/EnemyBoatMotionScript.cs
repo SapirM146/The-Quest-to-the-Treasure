@@ -18,7 +18,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
     public bool isPlayerDetected = false;
     float maxDistance = 100f;
     float lostDistance;
-    int layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
+    LayerMask layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
 
     public Animator foundTextAnim;
     public Animator lostTextAnim;

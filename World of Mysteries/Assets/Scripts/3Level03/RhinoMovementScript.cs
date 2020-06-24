@@ -13,6 +13,7 @@ public class RhinoMovementScript : MonoBehaviour
     bool playerChase = false;
     bool playerAttacked = false;
     public float range = 30f;
+    LayerMask layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
 
     public EnemyHPScript hp_script;
     public PlayerHPScript playerHP;
@@ -40,7 +41,7 @@ public class RhinoMovementScript : MonoBehaviour
             {
                 ChasePlayer();
             }
-            else if (!playerFound && Physics.Raycast(transform.position, transform.forward, out hit, range))
+            else if (!playerFound && Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
             {
                 if (hit.transform.CompareTag("Player"))
                 {
