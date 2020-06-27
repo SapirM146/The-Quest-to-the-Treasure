@@ -1,29 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    GameObject player;
-    //PlayerCollect playerCollect;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //playerCollect = player.GetComponent<PlayerCollect>()
-    }
+    PlayerCollect playerCollect;
 
     private void Update()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerCollect = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCollect>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            // playerCollect.collectCoin(); // in function --> coin collect sound
-
+            playerCollect.collectCoin();
             Destroy(gameObject);
         }
     }

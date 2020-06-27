@@ -1,40 +1,41 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class CameraFollowPlayer2D : MonoBehaviour
 {
-
     public Transform player;
     public Transform mapPos;
+    public L1GameManager gameManager;
 
     float x_offset = 7.8f;
     float y_offset = 4.4f;
-    bool levelComplete = false;
     float x_CameraPosToPlayerRight;
     float x_CameraPosToPlayerLeft; 
     float y_CameraPosToPlayerUp;
     float y_CameraPosToPlayerDown;
 
+    bool moveCameraToEndOfLevel = false;
+    bool waitingToNextLevel = false;
+
+
     private void Start()
     {
-        //cam = GetComponent<Camera>();
-        //goToMap();
         recalculateCameraPos();
-
     }
 
     private void FixedUpdate()
     {
-        if (levelComplete)
+        if (moveCameraToEndOfLevel)
         {
             if((transform.position.y - mapPos.position.y) < 1.5f)
             {
                 transform.position += new Vector3(0, 0.1f * Time.fixedDeltaTime, 0);
             }
-            else
+            else if(!waitingToNextLevel)
             {
-                // go to next level
+                waitingToNextLevel = true;
+                StartCoroutine(waitToNextLevel()); // go to next level
             }
         }
     }
@@ -62,14 +63,6 @@ public class CameraFollowPlayer2D : MonoBehaviour
             move(0, -y_offset);
             recalculateCameraPos();
         }
-
-
-
-        //Vector3 newPositon = player.position;
-        //newPositon.z = transform.position.z;
-        //transform.position = newPositon;
-
-        //transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f); // rotate with player
     }
 
     void recalculateCameraPos()
@@ -90,6 +83,12 @@ public class CameraFollowPlayer2D : MonoBehaviour
         Vector3 newPositon = mapPos.position;
         newPositon.z = transform.position.z;
         transform.position = newPositon;
-        levelComplete = true;
+        moveCameraToEndOfLevel = true;
+    }
+
+    IEnumerator waitToNextLevel()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameManager.GoToNextLevel();
     }
 }

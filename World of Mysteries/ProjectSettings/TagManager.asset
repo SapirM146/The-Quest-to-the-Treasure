@@ -57,6 +57,9 @@ TagManager:
   - name: Coins
     uniqueID: 2298955759
     locked: 0
+  - name: Fence Up
+    uniqueID: 493261057
+    locked: 0
   - name: Laser
     uniqueID: 1054201691
     locked: 0
@@ -68,4 +71,7 @@ TagManager:
     locked: 0
   - name: Trees
     uniqueID: 996065211
+    locked: 0
+  - name: Fence Down
+    uniqueID: 3228715863
     locked: 0
