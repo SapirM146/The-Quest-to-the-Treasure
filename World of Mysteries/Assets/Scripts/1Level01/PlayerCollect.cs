@@ -33,7 +33,7 @@ public class PlayerCollect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        findCoinsGemsText.SetActive(true);
+
     }
 
     // Update is called once per frame
@@ -49,7 +49,6 @@ public class PlayerCollect : MonoBehaviour
 
             if (!keyCollected && !mapCollected && !map.activeInHierarchy && allCoinsCollected && allGemsCollected)
             {
-
                 findCoinsGemsText.SetActive(false);
                 showKeyAndMap();
             }
@@ -101,6 +100,7 @@ public class PlayerCollect : MonoBehaviour
     {
         CoinsCollectedPanel.SetActive(flag);
         GemsCollectedPanel.SetActive(flag);
+        findCoinsGemsText.SetActive(flag);
     }
 
     void updatePanel(ref int currentNum, bool isDone, ref Text textPanel, int targetNum = -1)

@@ -16,7 +16,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
 
     int currentWayPoint;
     public bool isPlayerDetected = false;
-    float maxDistance = 100f;
+    float maxDistance = 200f;
     float lostDistance;
     LayerMask layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
 
