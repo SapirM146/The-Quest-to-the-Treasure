@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 69fc2b96570657a4c9ff4079733a431d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - destroyedBarrel: {fileID: 3311782416641755930, guid: e48c8b78f5704c64cb8a4bcb6670b4e2,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -25,7 +25,21 @@ public class PlayerHPScript : MonoBehaviour
 
     public void takeDamage(int damage)
     {
-        CurrentHealth -= damage;
+        if (CurrentHealth - damage < 0)
+            CurrentHealth = 0;
+        else
+            CurrentHealth -= damage;
+
+        healthBar.setHealth(CurrentHealth);
+    }
+
+    public void heal(int amount)
+    {
+        if (CurrentHealth + amount > maxHealth)
+            CurrentHealth = maxHealth;
+        else 
+            CurrentHealth += amount;
+
         healthBar.setHealth(CurrentHealth);
     }
 }

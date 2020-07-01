@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyHPScript : MonoBehaviour
 {
     Animator animator;
+    CapsuleCollider capsuleCollider;
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBarScript healthBar;
@@ -15,9 +15,10 @@ public class EnemyHPScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
         healthBar.setMaxHealth(maxHealth);
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,11 +28,12 @@ public class EnemyHPScript : MonoBehaviour
     }
 
     public void takeDamage(int damage)
-    {
+    {       
         if (currentHealth > 0)
         {
-            if(animator != null)
-                animator.Play("Get_Hit");
+            if (animator != null)
+                animator.SetTrigger("GetHit");
+
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
         }
@@ -44,8 +46,10 @@ public class EnemyHPScript : MonoBehaviour
     void die()
     {
         isAlive = false;
+        capsuleCollider.enabled = false;
+
         if (animator != null)
-            animator.Play("Dead");
+            animator.SetTrigger("Dead");
 
         Destroy(gameObject, 3f);
     }

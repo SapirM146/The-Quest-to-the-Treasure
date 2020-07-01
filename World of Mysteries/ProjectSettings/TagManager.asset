@@ -8,6 +8,8 @@ TagManager:
   - FoundPlayer
   - LostPlayer
   - EnemyBody
+  - Barrel
+  - EnemyHead
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - GPS
   - Prop
   - Player
-  - 
+  - Borders
   - 
   - 
   - 

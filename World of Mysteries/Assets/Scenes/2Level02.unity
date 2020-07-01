@@ -959,8 +959,8 @@ GameObject:
   - component: {fileID: 329620539}
   - component: {fileID: 329620543}
   - component: {fileID: 329620541}
-  - component: {fileID: 329620542}
   - component: {fileID: 329620545}
+  - component: {fileID: 329620542}
   - component: {fileID: 329620546}
   m_Layer: 0
   m_Name: Enemy1
@@ -1102,6 +1102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c0c0d298b162f48909deae4416b430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 30
 --- !u!82 &329620546
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6235,8 +6236,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313981979}
-  m_LocalRotation: {x: 0.12776971, y: 0.064836934, z: 0.008403378, w: -0.9896467}
-  m_LocalPosition: {x: 3.0841253, y: -1.1777554, z: -621.13806}
+  m_LocalRotation: {x: -0.06448446, y: -0, z: -0, w: 0.9979187}
+  m_LocalPosition: {x: 0, y: -7.9700003, z: -623.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 496769872}
@@ -9810,6 +9811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c0c0d298b162f48909deae4416b430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 30
 --- !u!82 &1989857418
 AudioSource:
   m_ObjectHideFlags: 0

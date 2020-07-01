@@ -51,11 +51,11 @@ public class RhinoMovementScript : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            agent.isStopped = true;
-            animator.StopPlayback();
-        }
+        //else
+        //{
+        //    agent.isStopped = true;
+        //    animator.StopPlayback();
+        //}
 
     }
 

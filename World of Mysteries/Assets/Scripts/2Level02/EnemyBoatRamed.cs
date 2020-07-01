@@ -7,6 +7,7 @@ public class EnemyBoatRamed : MonoBehaviour
 
     EnemyHPScript hp;
     AudioSource wood_hit_sound;
+    public int damage = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class EnemyBoatRamed : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             wood_hit_sound.Play();
-            hp.takeDamage(30);
+            hp.takeDamage(damage);
         }
 
     }
