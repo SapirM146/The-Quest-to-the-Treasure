@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1010754100}
   - component: {fileID: 1010754102}
   - component: {fileID: 1010754101}
-  m_Layer: 0
-  m_Name: HitBox
+  m_Layer: 11
+  m_Name: ZombieHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,12 +309,12 @@ PrefabInstance:
     - target: {fileID: 6674579941996137990, guid: 5e2572a25b7369d40bbccd8107d21ae8,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6674579941996137990, guid: 5e2572a25b7369d40bbccd8107d21ae8,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6674579942572299408, guid: 5e2572a25b7369d40bbccd8107d21ae8,
         type: 3}

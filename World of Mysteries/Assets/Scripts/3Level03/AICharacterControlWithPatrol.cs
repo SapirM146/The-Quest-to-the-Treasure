@@ -41,7 +41,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (!hp.isAlive)
             {
                 agent.isStopped = true;
-                slash.GetComponent<CapsuleCollider>().enabled = false;
+                if(slash != null)
+                    slash.GetComponent<CapsuleCollider>().enabled = false;
             }
             else
             {

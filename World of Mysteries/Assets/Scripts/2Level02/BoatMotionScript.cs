@@ -6,7 +6,7 @@ public class BoatMotionScript : MonoBehaviour
 {
     public float turnSpeed = 1500f;
     public float accelerateSpeed = 2000f;
-    bool motorSoundPlaying = false;
+    bool motorSoundPlaying;
 
     AudioSource[] audioSource;
     Rigidbody rb;
@@ -16,6 +16,7 @@ public class BoatMotionScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponents<AudioSource>();
+        motorSoundPlaying = false;
     }
 
     void FixedUpdate()

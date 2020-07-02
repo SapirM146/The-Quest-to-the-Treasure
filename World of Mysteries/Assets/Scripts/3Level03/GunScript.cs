@@ -10,9 +10,15 @@ public class GunScript : MonoBehaviour
     public Camera fpsCam;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
+    AudioSource laserShotSound;
     public L3GameManager gm;
 
-    
+
+    private void Start()
+    {
+        laserShotSound = GetComponent<AudioSource>();
+    }
+
     void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
@@ -23,6 +29,7 @@ public class GunScript : MonoBehaviour
 
     private void shoot()
     {
+        laserShotSound.Play();
         muzzleFlash.Play();
 
         RaycastHit hit;

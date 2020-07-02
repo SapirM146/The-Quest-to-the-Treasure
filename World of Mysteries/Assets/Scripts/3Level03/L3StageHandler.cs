@@ -5,7 +5,7 @@ using UnityEngine;
 public class L3StageHandler : MonoBehaviour
 {
     public L3GameManager gm;
-    public int numOfEnemiesInCurrentStage;
+    public int NumOfEnemiesInCurrentStage { get; private set; }
     public GameObject[] EnemiesByStage;
     int currentKnownStage;
 
@@ -24,7 +24,7 @@ public class L3StageHandler : MonoBehaviour
         EnemiesByStage[nextStage].SetActive(true);
         currentKnownStage = nextStage;
 
-        numOfEnemiesInCurrentStage = checkNumOfEnemiesInStage();
+        NumOfEnemiesInCurrentStage = checkNumOfEnemiesInStage();
     }
 
     public int checkNumOfEnemiesInStage()

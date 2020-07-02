@@ -13,14 +13,21 @@ public class L1GameManager : MonoBehaviour
 
     public static bool LevelComplete { get; private set; }
     public static bool playerInEndZone;
-    public static bool isGameStarted = false;
+    public static bool isGameStarted;
 
+
+    private void Awake()
+    {
+        PlayerData player = new PlayerData(SceneManager.GetActiveScene().buildIndex);
+        SaveSystem.SavePlayer(player);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         LevelComplete = false;
         playerInEndZone = false;
+        isGameStarted = false;
     }
 
     // Update is called once per frame
@@ -62,6 +69,7 @@ public class L1GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -73,7 +81,7 @@ public class L1GameManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 }

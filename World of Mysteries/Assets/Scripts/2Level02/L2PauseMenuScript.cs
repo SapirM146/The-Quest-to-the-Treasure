@@ -5,8 +5,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class L2PauseMenuScript : MonoBehaviour
 {
-    public static bool isGamePaused = false;
-    public static bool isGameStarted = false;
+    public static bool isGamePaused;
+    public static bool isGameStarted;
 
     public GameObject instructionPanel;
     public GameObject pauseMenu;
@@ -19,6 +19,8 @@ public class L2PauseMenuScript : MonoBehaviour
 
     private void Start()
     {
+        isGamePaused = false;
+        isGameStarted = false;
         shootingAbility = GameObject.FindGameObjectWithTag("Player").GetComponent<BoatShottingScript>();
         modeSwitch = GetComponent<SwitchModeScript>();
         gamePause();

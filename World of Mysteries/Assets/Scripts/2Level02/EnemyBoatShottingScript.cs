@@ -11,13 +11,14 @@ public class EnemyBoatShottingScript : MonoBehaviour
 
     readonly float shootTimeConstant = 5f;
     float shootTimer;
-    public bool shootFlag = false;
+    public bool shootFlag;
 
 
     private void Start()
     {
         motion = GetComponent<EnemyBoatMotionScript>();
         hp = GetComponent<EnemyHPScript>();
+        shootFlag = false;
     }
 
     // Update is called once per frame

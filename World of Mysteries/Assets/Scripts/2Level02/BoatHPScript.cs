@@ -6,7 +6,7 @@ public class BoatHPScript : MonoBehaviour
 {
     float damagedFromLandtimer = 5f;
     float boatHP = 1f;
-    bool damagedFromLandFlag = false;
+    bool damagedFromLandFlag;
 
     AudioSource[] audioSource;
 
@@ -14,6 +14,7 @@ public class BoatHPScript : MonoBehaviour
     void Start()
     {
         audioSource = GetComponents<AudioSource>();
+        damagedFromLandFlag = false;
     }
 
     private void FixedUpdate()

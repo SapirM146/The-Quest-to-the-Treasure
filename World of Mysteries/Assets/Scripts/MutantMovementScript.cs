@@ -9,9 +9,9 @@ public class MutantMovementScript : MonoBehaviour
     Transform player;
     Animator animator;
     Coroutine attack;
-    bool playerFound = false;
-    bool playerChase = false;
-    public bool playerAttacked = false;
+    bool playerFound;
+    bool playerChase;
+    public bool playerAttacked;
     public float range = 30f;
 
     public EnemyHPScript hp_script;
@@ -22,6 +22,9 @@ public class MutantMovementScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerFound = false;
+        playerChase = false;
+        playerAttacked = false;
         //StartCoroutine(foundPlayer());
         //animator.Play("Eats");
     }

@@ -10,6 +10,7 @@ TagManager:
   - EnemyBody
   - Barrel
   - EnemyHead
+  - GameManager
   layers:
   - Default
   - TransparentFX

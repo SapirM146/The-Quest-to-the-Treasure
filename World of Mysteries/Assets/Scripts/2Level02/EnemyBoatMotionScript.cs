@@ -15,7 +15,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
     EnemyHPScript hp;
 
     int currentWayPoint;
-    public bool isPlayerDetected = false;
+    public bool isPlayerDetected;
     float maxDistance = 200f;
     float lostDistance;
     LayerMask layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
@@ -26,6 +26,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
 
     private void Start()
     {
+        isPlayerDetected = false;
         lostDistance = maxDistance + 20f;
         agent = GetComponent<NavMeshAgent>();
         hp = GetComponent<EnemyHPScript>();

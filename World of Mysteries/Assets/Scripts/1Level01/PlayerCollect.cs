@@ -19,10 +19,10 @@ public class PlayerCollect : MonoBehaviour
     public AudioClip keyCollectSound;
 
     public bool AllTasksComplete { get; private set; }
-    bool allCoinsCollected = false;
-    bool allGemsCollected = false;
-    bool mapCollected = false;
-    bool keyCollected = false;
+    bool allCoinsCollected;
+    bool allGemsCollected;
+    bool mapCollected;
+    bool keyCollected;
 
     int numOfCoinsCollected = 0;
     readonly int numOfCoins = 7;
@@ -33,7 +33,10 @@ public class PlayerCollect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        allCoinsCollected = false;
+        allGemsCollected = false;
+        mapCollected = false;
+        keyCollected = false;
     }
 
     // Update is called once per frame

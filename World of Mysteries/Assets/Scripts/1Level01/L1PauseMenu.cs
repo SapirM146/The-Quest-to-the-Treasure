@@ -6,12 +6,13 @@ public class L1PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public PlayerCollect playerCollect;
 
-    public static bool isGamePaused = false;
+    public static bool isGamePaused;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        isGamePaused = false;
         gamePause();
     }
 

@@ -11,27 +11,51 @@ public class L3GameManager : MonoBehaviour
     //public int CurrentStage {get; private set;}
     public int CurrentStage;
     readonly int lastStage = 3;
-    bool isLevelEnded = false;
-    bool showDamage = false;
+    bool isLevelEnded;
+    bool showDamage;
 
-    public L3StageHandler enemiesShowHide;
+    public L3StageHandler stageHandler;
     public PlayerHPScript playerHP;
     public RigidbodyFirstPersonController fps;
     Transform playerPos;
     public Transform[] playerDropPointsByStage;
     [Space] [Space]
-    public L2PauseMenuScript pauseMenu;
+    public L3PauseMenuScript pauseMenu;
     public GameObject loseMenu;
-    //public GameObject winMenu;
     public GameObject damageCanvas;
     public Text damageText;
     Coroutine showDamageCoroutine;
+    public Text stageText;
+    public Text enemiesLeftText;
+    PlayerData player;
 
 
+    private void Awake()
+    {
+        int currentLevel = SceneManager.GetActiveScene().buildIndex;
+        player = SaveSystem.LoadPlayer();
+
+        if (player != null && player.Level == currentLevel)
+        {
+            CurrentStage = player.Stage;
+
+            if (CurrentStage == lastStage)
+                prepareToLastStage();
+        }
+
+        else
+        {
+            player = new PlayerData(SceneManager.GetActiveScene().buildIndex);
+            SaveSystem.SavePlayer(player);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        isLevelEnded = false;
+        showDamage = false;
+        stageHandler.showNextStage(CurrentStage);
         playerPos = fps.gameObject.transform;
         playerPos.position = playerDropPointsByStage[CurrentStage].position;
         playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
@@ -43,28 +67,42 @@ public class L3GameManager : MonoBehaviour
         if (!isLevelEnded)
         {
             int hp = playerHP.CurrentHealth;
-            int numOfEnemies = enemiesShowHide.checkNumOfEnemiesInStage();
+            int numOfEnemiesLeft = stageHandler.checkNumOfEnemiesInStage();
+
+            updatePanel(numOfEnemiesLeft, ref enemiesLeftText);
+            updatePanel(CurrentStage + 1, ref stageText, lastStage + 1);
 
             if (hp <= 0)
             {
                 isLevelEnded = true;
-                RestartLevel();
-                //StartCoroutine(loseLevel());
+                StartCoroutine(loseLevel());
             }
 
-            else if (CurrentStage + 1 <= lastStage && numOfEnemies == 0)
+            else if (CurrentStage + 1 <= lastStage && numOfEnemiesLeft == 0)
             {
-                enemiesShowHide.showNextStage(++CurrentStage);
-                Debug.Log(CurrentStage);
+                stageHandler.showNextStage(++CurrentStage);
+                
+                if (player != null)
+                {
+                    player.Stage = CurrentStage;
+                    SaveSystem.SavePlayer(player);
+                }
+
                 playerHP.heal(playerHP.maxHealth); // heal the player each stage
                 playerPos.position = playerDropPointsByStage[CurrentStage].position;
                 playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
 
                 if (CurrentStage == lastStage)
-                    fps.movementSettings.JumpForce = 500;
+                {
+                    pauseMenu.gamePause();
+                    prepareToLastStage();
+                }
+
+                
+                
             }
 
-            else if (CurrentStage == lastStage && numOfEnemies == 0)
+            else if (CurrentStage == lastStage && numOfEnemiesLeft == 0)
             {
                 isLevelEnded = true;
                 StartCoroutine(winLevel());
@@ -72,21 +110,31 @@ public class L3GameManager : MonoBehaviour
         }
     }
 
+    void prepareToLastStage()
+    {
+        pauseMenu.isLastStage = true;
+        pauseMenu.isGameStarted = false;
+        pauseMenu.instructionsPanel.SetActive(false);
+        pauseMenu.LastBattleInstructionsPanel.SetActive(true);
+        fps.movementSettings.JumpForce = 500;
+    }
+
+    void updatePanel(int currentNum, ref Text textPanel, int targetNum = -1)
+    {
+        textPanel.text = (targetNum != -1) ? (currentNum + " / " + targetNum) : currentNum.ToString();   
+    }
+
     IEnumerator loseLevel()
     {
         pauseMenu.enabled = false;
 
-        // show lose message
-
-
         yield return new WaitForSeconds(0.5f);
 
-        //fps.enabled = false;
+        fps.enabled = false;
         Cursor.lockState = CursorLockMode.None; // unlock cursor
         Cursor.visible = true; // show curser
         Time.timeScale = 0f; // stop time
         loseMenu.SetActive(true); // show lose menu
-
     }
 
     IEnumerator winLevel()
@@ -97,16 +145,13 @@ public class L3GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None; // unlock cursor
         Cursor.visible = true; // show curser
-        Time.timeScale = 0f; // stop time
-        
-        //winMenu.SetActive(true); // show win menu
-        
+        //Time.timeScale = 0f; // stop time        
         GoToWinScene();
     }
 
     void GoToWinScene()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -140,6 +185,11 @@ public class L3GameManager : MonoBehaviour
 
         if (!showDamage)
             damageCanvas.SetActive(false); // hide the damage canvas
+    }
+
+    void saveProgress()
+    {
+
     }
 
 }

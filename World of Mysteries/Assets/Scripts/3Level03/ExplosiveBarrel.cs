@@ -5,14 +5,25 @@ public class ExplosiveBarrel : MonoBehaviour
     public ParticleSystem explosionEffect;
     public GameObject destroyedBarrel;
     public Transform explosionPos;
-    public AudioClip explosionSound;
+    AudioSource explosionSound;
+    MeshRenderer mesh;
+    CapsuleCollider capsuleCollider;
+
+    private void Start()
+    {
+        explosionSound = GetComponent<AudioSource>();
+        mesh = GetComponent<MeshRenderer>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+    }
 
     public void explode()
     {
-        AudioSource.PlayClipAtPoint(explosionSound,transform.position);
+        explosionSound.Play();
         ParticleSystem explosion = Instantiate(explosionEffect, explosionPos.position, Quaternion.identity);
+        mesh.enabled = false;
+        capsuleCollider.enabled = false;
         Instantiate(destroyedBarrel, transform.position, Quaternion.identity);
         Destroy(explosion.gameObject, 2f);
-        Destroy(gameObject);
+        Destroy(gameObject, 3f);
     }
 }

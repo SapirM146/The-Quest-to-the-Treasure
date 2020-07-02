@@ -22,7 +22,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public float timerMin = 10f;
         public float timerMax = 20f;
         public float RunningDurration = 10f;
-        bool isRunning = false;
+        bool isRunning;
 
 
 
@@ -33,6 +33,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             hp = GetComponent<EnemyHPScript>();
             character = GetComponent<ThirdPersonCharacter>();
             animator = GetComponent<Animator>();
+            isRunning = false;
 
             agent.updateRotation = false;
             agent.updatePosition = true;

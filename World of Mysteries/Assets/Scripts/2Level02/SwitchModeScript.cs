@@ -15,11 +15,13 @@ public class SwitchModeScript : MonoBehaviour
     public GameObject fps;
     public GameObject fpsStartPosition;
 
-    public static bool isBoatMode = true;
-    public static bool isFreeCamMode = false;
+    public static bool isBoatMode;
+    public static bool isFreeCamMode;
 
     private void Start()
     {
+        isBoatMode = true;
+        isFreeCamMode = false;
         autoCam = boatCamera.GetComponent<AutoCam>();
         freeCam = boatCamera.GetComponent<FreeLookCam>();
         boatRB = boat.GetComponent<Rigidbody>();

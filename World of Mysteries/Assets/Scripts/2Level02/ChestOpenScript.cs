@@ -7,7 +7,13 @@ public class ChestOpenScript : MonoBehaviour
     public AudioClip chestClip;
     public Transform treasureChestBox;
     public L2GameManagerScript gm;
-    bool isOpen = false;
+    bool isOpen;
+
+
+    private void Start()
+    {
+        isOpen = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

@@ -11,6 +11,17 @@ public class StartMenuScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void Continue()
+    {
+        int level = 1;
+        PlayerData player = SaveSystem.LoadPlayer();
+
+        if (player != null)
+            level = player.Level;
+
+        SceneManager.LoadScene(level);
+    }
+
     public void ExitGame()
     {
         Application.Quit();

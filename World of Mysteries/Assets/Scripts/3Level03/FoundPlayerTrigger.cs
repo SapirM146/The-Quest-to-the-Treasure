@@ -6,8 +6,14 @@ using UnityStandardAssets.Characters.ThirdPerson;
 public class FoundPlayerTrigger : MonoBehaviour
 {
     public AICharacterControlWithPatrol ai;
-    public bool foundPlayer = false;
+    public bool foundPlayer;
     public Transform player;
+
+
+    private void Start()
+    {
+        foundPlayer = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

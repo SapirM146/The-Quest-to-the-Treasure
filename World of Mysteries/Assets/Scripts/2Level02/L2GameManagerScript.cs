@@ -21,16 +21,26 @@ public class L2GameManagerScript : MonoBehaviour
     int numOfEnemies;
     int numOfEnemiesLeft;
 
-    bool isLevelEnded = false;
-    bool allChestFounded = false; // false
-    bool allEnemiesDefeated = false; // false
-    public static bool playerInEndZone = false;
+    bool isLevelEnded;
+    bool allChestFounded;
+    bool allEnemiesDefeated; 
+    public static bool playerInEndZone;
+
+    private void Awake()
+    {
+        PlayerData player = new PlayerData(SceneManager.GetActiveScene().buildIndex);
+        SaveSystem.SavePlayer(player);
+    }
 
     private void Start()
     {
         playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHPScript>();
         numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         numOfEnemiesLeft = numOfEnemies;
+        isLevelEnded = false;
+        allChestFounded = false;
+        allEnemiesDefeated = false;
+        playerInEndZone = false;
     }
 
     // Update is called once per frame

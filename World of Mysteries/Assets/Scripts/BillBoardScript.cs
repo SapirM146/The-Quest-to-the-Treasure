@@ -6,10 +6,6 @@ public class BillBoardScript : MonoBehaviour
 {
     private Transform cam;
 
-    private void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void LateUpdate()

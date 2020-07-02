@@ -9,12 +9,13 @@ public class EnemyHPScript : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBarScript healthBar;
-    public bool isAlive = true;
+    public bool isAlive;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        isAlive = true;
         currentHealth = maxHealth;
         healthBar.setMaxHealth(maxHealth);
         capsuleCollider = GetComponent<CapsuleCollider>();

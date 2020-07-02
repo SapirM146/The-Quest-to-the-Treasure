@@ -15,12 +15,14 @@ public class CameraFollowPlayer2D : MonoBehaviour
     float y_CameraPosToPlayerUp;
     float y_CameraPosToPlayerDown;
 
-    bool moveCameraToEndOfLevel = false;
-    bool waitingToNextLevel = false;
+    bool moveCameraToEndOfLevel;
+    bool waitingToNextLevel;
 
 
     private void Start()
     {
+        moveCameraToEndOfLevel = false;
+        waitingToNextLevel = false;
         recalculateCameraPos();
     }
 
