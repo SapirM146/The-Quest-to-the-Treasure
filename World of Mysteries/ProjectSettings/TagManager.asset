@@ -11,6 +11,8 @@ TagManager:
   - Barrel
   - EnemyHead
   - GameManager
+  - Rock
+  - Crate
   layers:
   - Default
   - TransparentFX

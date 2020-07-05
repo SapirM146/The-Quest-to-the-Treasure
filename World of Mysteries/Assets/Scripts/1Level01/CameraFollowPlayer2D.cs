@@ -6,7 +6,8 @@ public class CameraFollowPlayer2D : MonoBehaviour
 {
     public Transform player;
     public Transform mapPos;
-    public L1GameManager gameManager;
+    PlayerMovement playerMovement;
+    PlayerCollect playerCollect;
 
     float x_offset = 7.8f;
     float y_offset = 4.4f;
@@ -14,56 +15,60 @@ public class CameraFollowPlayer2D : MonoBehaviour
     float x_CameraPosToPlayerLeft; 
     float y_CameraPosToPlayerUp;
     float y_CameraPosToPlayerDown;
+    Vector3 oldPosition;
 
-    bool moveCameraToEndOfLevel;
-    bool waitingToNextLevel;
+    public bool MoveCameraToMap { get; private set; }
 
 
     private void Start()
     {
-        moveCameraToEndOfLevel = false;
-        waitingToNextLevel = false;
+        MoveCameraToMap = false;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerCollect = player.GetComponent<PlayerCollect>();
         recalculateCameraPos();
     }
 
     private void FixedUpdate()
     {
-        if (moveCameraToEndOfLevel)
+        if (MoveCameraToMap)
         {
-            if((transform.position.y - mapPos.position.y) < 1.5f)
+            if ((transform.position.y - mapPos.position.y) < 1.5f)
             {
                 transform.position += new Vector3(0, 0.1f * Time.fixedDeltaTime, 0);
             }
-            else if(!waitingToNextLevel)
+            else
             {
-                waitingToNextLevel = true;
-                StartCoroutine(waitToNextLevel()); // go to next level
+                MoveCameraToMap = false;
+                StartCoroutine(returnToPlayerPosition());// move to IEnumerator function
             }
         }
     }
 
     void LateUpdate()
     {
-        if (player.position.x > x_CameraPosToPlayerRight)
+        if (!MoveCameraToMap)
         {
-            move(x_offset, 0);
-            recalculateCameraPos();
-        }
-        else if (player.position.x < x_CameraPosToPlayerLeft)
-        {
-            move(-x_offset, 0);
-            recalculateCameraPos();
-        }
-        else if (player.position.y > y_CameraPosToPlayerUp)
-        {
-            move(0, y_offset);
-            recalculateCameraPos();
-        }
+            if (player.position.x > x_CameraPosToPlayerRight)
+            {
+                move(x_offset, 0);
+                recalculateCameraPos();
+            }
+            else if (player.position.x < x_CameraPosToPlayerLeft)
+            {
+                move(-x_offset, 0);
+                recalculateCameraPos();
+            }
+            else if (player.position.y > y_CameraPosToPlayerUp)
+            {
+                move(0, y_offset);
+                recalculateCameraPos();
+            }
 
-        else if (player.position.y < y_CameraPosToPlayerDown)
-        {
-            move(0, -y_offset);
-            recalculateCameraPos();
+            else if (player.position.y < y_CameraPosToPlayerDown)
+            {
+                move(0, -y_offset);
+                recalculateCameraPos();
+            }
         }
     }
 
@@ -82,15 +87,26 @@ public class CameraFollowPlayer2D : MonoBehaviour
 
     public void goToMap()
     {
+        StartCoroutine(goToMapPosition());
+    }
+
+    IEnumerator goToMapPosition()
+    {
+        yield return new WaitForSeconds(0.5f);
+        oldPosition = transform.position;
+        playerMovement.isStopped = true;
         Vector3 newPositon = mapPos.position;
         newPositon.z = transform.position.z;
         transform.position = newPositon;
-        moveCameraToEndOfLevel = true;
+        MoveCameraToMap = true;
+        playerCollect.showCollectPanels(false);
     }
 
-    IEnumerator waitToNextLevel()
+    IEnumerator returnToPlayerPosition()
     {
         yield return new WaitForSeconds(0.5f);
-        gameManager.GoToNextLevel();
+        transform.position = oldPosition;
+        playerCollect.showCollectPanels(true);
+        playerMovement.isStopped = false;
     }
 }

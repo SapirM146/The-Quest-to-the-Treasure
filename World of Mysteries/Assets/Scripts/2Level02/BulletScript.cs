@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     Rigidbody rb;
-    PlayerHPScript playerHP;
+    //PlayerHPScript playerHP;
     Vector3 startPos;
     int force = 10000;
     int maxDistance = 300;
@@ -15,8 +15,7 @@ public class BulletScript : MonoBehaviour
 
     private void Awake()
     {
-        playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHPScript>();
-        cannonSound = playerHP.gameObject.GetComponents<AudioSource>()[2];
+        cannonSound = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>()[2];
     }
 
     void Start()
@@ -37,23 +36,21 @@ public class BulletScript : MonoBehaviour
     {
         if (origin.CompareTag("Player"))
         {
-            //if (other.CompareTag("EnemyBody"))
-            if (other.CompareTag("Enemy"))
+            EnemyHPScript enemy = other.GetComponent<EnemyHPScript>();
+            if (enemy != null)
             {
                 cannonSound.Play();
-                other.GetComponent<EnemyHPScript>().takeDamage(20);
-                //other.GetComponent<EnemyBoatPartScript>().MainPartHP.takeDamage(20);
-                //Destroy(other.gameObject);
+                enemy.takeDamage(20);
             }
         }
         
         else // origin is enemy
         {
-            //if (other.CompareTag("PlayerBody"))
-            if (other.CompareTag("Player"))
+            PlayerHPScript player = other.GetComponent<PlayerHPScript>();
+            if (player != null)
             {
                 cannonSound.Play();
-                playerHP.takeDamage(15);
+                player.takeDamage(15);
             }
         }
 

@@ -35,39 +35,45 @@ public class GunScript : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
         {
-            if (hit.collider.CompareTag("Enemy"))
-            {
-                EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
-                if (target != null)
-                {
-                    gm.showDamageOnScreen(damage);
-                    target.takeDamage(damage);
-                }
-            }
-            if (hit.collider.CompareTag("EnemyHead"))
-            {
-                EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
+            Destructible dest = hit.transform.GetComponent<Destructible>();
+            if (dest != null)
+                dest.Destroy();
+            
+            Explodable explodable = hit.transform.GetComponent<Explodable>();
+            if (explodable != null)
+                explodable.Explode();
 
-                if (target != null)
-                {
-                    int amount = damage * 2;
-                    gm.showDamageOnScreen(amount);
-                    target.takeDamage(amount);
-                }
-            }
-            else if (hit.collider.CompareTag("Barrel"))
-            {
-                ExplosiveBarrel barrel = hit.transform.GetComponent<ExplosiveBarrel>();
-                if (barrel != null)
-                {
-                    barrel.explode();
-                }
-                //else
-                //{
-                //    BlueBarrel blue = hit.transform.GetComponent<BlueBarrel>();
-                //    blue.explode();
-                //}
+            //else if (hit.collider.CompareTag("Enemy"))
+            //{
+            //    EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
+            //    if (target != null)
+            //    {
+            //        gm.showDamageOnScreen(damage);
+            //        target.takeDamage(damage);
+            //    }
+            //}
+            //else if (hit.collider.CompareTag("EnemyHead"))
+            //{
+            //    EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
 
+            //    if (target != null)
+            //    {
+            //        int amount = damage * 2;
+            //        gm.showDamageOnScreen(amount);
+            //        target.takeDamage(amount);
+            //    }
+            //}
+
+            EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
+            if (target != null)
+            {
+                int amount = damage;
+
+                if (hit.collider.CompareTag("EnemyHead"))
+                        amount *= 2;
+
+                gm.showDamageOnScreen(amount);
+                target.takeDamage(amount);
             }
 
             GameObject impactGO2 = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));

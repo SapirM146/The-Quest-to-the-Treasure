@@ -70,17 +70,15 @@ public class EnemyBoatMotionScript : MonoBehaviour
             sight.origin = transform.position;
             sight.direction = transform.forward;
 
-            //if (Physics.SphereCast(sight, sphereRadius, out rayHit, sphereDis, layerMask))
             if (Physics.Raycast(sight, out rayHit, maxDistance, layerMask))
             {
                 Debug.DrawLine(sight.origin, rayHit.point, Color.red);
-                //if (!isPlayerDetected && rayHit.collider.CompareTag("PlayerBody"))
                 if (!isPlayerDetected && rayHit.collider.CompareTag("Player"))
                 {
                     isPlayerDetected = true;
                     agent.autoBraking = true;
                     agent.stoppingDistance = 70f;
-                    foundTextAnim.SetTrigger("FoundPlayer");
+                    foundTextAnim.SetTrigger("FoundLostPlayer");
                     agent.SetDestination(player.position);
                 }
             }
@@ -91,21 +89,15 @@ public class EnemyBoatMotionScript : MonoBehaviour
                 float playerDis = Vector3.Distance(player.position, transform.position);
                 //float playerDis = agent.remainingDistance;
 
-                //Debug.Log("remainingDistance To player: " + agent.remainingDistance);
-                //Debug.Log("playerDis To player: " + playerDis);
-                //Debug.Log("stoping To player: " + agent.stoppingDistance);
-                //Debug.Log("player pos: " + player.position);
-
                 if (playerDis <= agent.stoppingDistance)
                     transform.LookAt(player);
 
                 else if (playerDis < lostDistance)
-                    //Debug.Log("middle: " + agent.stoppingDistance);
                     agent.speed = 30f;
 
                 else // playerDis > lostDistance
                 {
-                    lostTextAnim.SetTrigger("LostPlayer");
+                    lostTextAnim.SetTrigger("FoundLostPlayer");
                     agent.stoppingDistance = 5f;
                     agent.speed = 25f;
                     isPlayerDetected = false;

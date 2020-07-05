@@ -23,7 +23,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public float timerMax = 20f;
         public float RunningDurration = 10f;
         bool isRunning;
-
+        Coroutine chargeAtPlayerCoroutine;
 
 
         private void Start()
@@ -37,7 +37,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             agent.updateRotation = false;
             agent.updatePosition = true;
-            //slash.damage = 0;
         }
 
 
@@ -45,21 +44,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
             if (!hp.isAlive)
             {
-                StopCoroutine(ChargeAtPlayer());
+                if(chargeAtPlayerCoroutine != null)
+                    StopCoroutine(chargeAtPlayerCoroutine);
+                if (isRunning)
+                    animator.speed = 1f;
                 agent.isStopped = true;
                 slash.GetComponent<CapsuleCollider>().enabled = false;
             }
             else
             {
-                if (!isRunning)
-                    StartCoroutine(ChargeAtPlayer());
-
-                if (target == null)
-                    return;
-
-                else // target != null
+                if (target != null)
                 {
                     agent.SetDestination(target.position);
+
+                    if (!isRunning)
+                        chargeAtPlayerCoroutine = StartCoroutine(ChargeAtPlayer());
 
                     if (agent.remainingDistance > agent.stoppingDistance)
                     {
@@ -95,7 +94,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             yield return new WaitForSeconds(time);
             agent.speed = runSpeed;
             agent.acceleration = runAcceleration;
-            animator.speed = 2f;
+            animator.speed *= 2f;
             Invoke("stopRunning", RunningDurration);
         }
 

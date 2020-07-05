@@ -39,7 +39,7 @@ public class EnemyBoatShottingScript : MonoBehaviour
             {
                 shootTimer = shootTimeConstant;
                 GameObject b = Instantiate(bullet, bulletStartPos.position, Quaternion.identity);
-                b.GetComponent<BulletScript>().origin = this.gameObject;
+                b.GetComponent<BulletScript>().origin = gameObject;
                 shootFlag = true;
             }
         }

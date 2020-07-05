@@ -8,16 +8,30 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
 
     Vector2 movement;
+    public bool isStopped { get; set; }
+
+    private void Start()
+    {
+        isStopped = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
+        if (isStopped)
+        {
+            movement.x = 0f;
+            movement.y = 0f;
+        }
+        else
+        {
+            movement.x = Input.GetAxis("Horizontal");
+            movement.y = Input.GetAxis("Vertical");
 
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.magnitude);
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.magnitude);
+        }
     }
 
     private void FixedUpdate()

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1176886883052288561}
   - component: {fileID: 1176886883052288566}
   - component: {fileID: 606282182485855979}
-  - component: {fileID: 1176886883052288563}
   m_Layer: 0
   m_Name: BlueBarrel
   m_TagString: Barrel
@@ -112,17 +111,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1176886883052288563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176886883052288567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69fc2b96570657a4c9ff4079733a431d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyedBarrel: {fileID: 3311782416641755930, guid: e48c8b78f5704c64cb8a4bcb6670b4e2,
-    type: 3}

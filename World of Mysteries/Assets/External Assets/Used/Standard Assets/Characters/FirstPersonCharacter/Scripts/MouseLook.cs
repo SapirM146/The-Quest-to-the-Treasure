@@ -15,6 +15,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public bool smooth;
         public float smoothTime = 5f;
         public bool lockCursor = true;
+        public bool noAutoRotate;
 
 
         private Quaternion m_CharacterTargetRot;
@@ -33,8 +34,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
-            m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
+            if (noAutoRotate)
+            {
+                m_CharacterTargetRot = Quaternion.Euler(0f, character.eulerAngles.y, 0f);
+                m_CameraTargetRot = Quaternion.Euler(camera.eulerAngles.x, 0f, 0f);
+            }
+            else
+            {
+                m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
+                m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
+            }
 
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);

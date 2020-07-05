@@ -7,8 +7,9 @@ public class PlayerCollect : MonoBehaviour
     public Text gemsCollectedText;
     public GameObject findCoinsGemsText;
     public GameObject findMapKeyText;
-    public GameObject CoinsCollectedPanel;
-    public GameObject GemsCollectedPanel;
+    public GameObject coinsCollectedPanel;
+    public GameObject gemsCollectedPanel;
+    public CameraFollowPlayer2D cam;
 
     public GameObject map;
     public GameObject key;
@@ -23,6 +24,7 @@ public class PlayerCollect : MonoBehaviour
     bool allGemsCollected;
     bool mapCollected;
     bool keyCollected;
+
 
     int numOfCoinsCollected = 0;
     readonly int numOfCoins = 7;
@@ -84,6 +86,7 @@ public class PlayerCollect : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(mapCollectSound, transform.position);
         mapCollected = true;
+        cam.goToMap();
     }
 
     public void collectKey()
@@ -101,9 +104,8 @@ public class PlayerCollect : MonoBehaviour
 
     public void showCollectPanels(bool flag)
     {
-        CoinsCollectedPanel.SetActive(flag);
-        GemsCollectedPanel.SetActive(flag);
-        findCoinsGemsText.SetActive(flag);
+        coinsCollectedPanel.SetActive(flag);
+        gemsCollectedPanel.SetActive(flag);
     }
 
     void updatePanel(ref int currentNum, bool isDone, ref Text textPanel, int targetNum = -1)

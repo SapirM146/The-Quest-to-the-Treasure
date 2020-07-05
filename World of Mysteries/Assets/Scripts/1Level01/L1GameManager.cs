@@ -9,6 +9,7 @@ public class L1GameManager : MonoBehaviour
     public GameObject winMenu;
     public L1PauseMenu pauseMenu;
     public PlayerCollect playerCollect;
+    public PlayerMovement playerMovement;
     public GameObject goToExitPanel;
 
     public static bool LevelComplete { get; private set; }
@@ -52,13 +53,6 @@ public class L1GameManager : MonoBehaviour
         }
     }
 
-    public void showNextLevelMap()
-    {
-        winMenu.SetActive(false);
-        Time.timeScale = 1f;
-        cam.goToMap();
-    }
-
     public void showWinMenu()
     {
         Time.timeScale = 0f; // stop time
@@ -69,13 +63,13 @@ public class L1GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void RestartLevel()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

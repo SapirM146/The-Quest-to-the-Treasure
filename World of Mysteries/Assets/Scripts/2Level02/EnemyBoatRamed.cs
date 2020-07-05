@@ -18,12 +18,10 @@ public class EnemyBoatRamed : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.tag);
         if (collision.collider.CompareTag("Player"))
         {
             wood_hit_sound.Play();
             hp.takeDamage(damage);
         }
-
     }
 }

@@ -15,6 +15,7 @@ public class L3PauseMenuScript : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject StagePanel;
     public GameObject EnemiesDefeatedPanel;
+    public GameObject GrenadeAmountPanel;
     //public GameObject ChestsCollectedPanel;
     public RigidbodyFirstPersonController fps;
 
@@ -32,8 +33,9 @@ public class L3PauseMenuScript : MonoBehaviour
             {
                 //GetComponent<AudioSource>().Play();
                 instructionsPanel.SetActive(false);
-                StagePanel.SetActive(true);
-                EnemiesDefeatedPanel.SetActive(true);
+                //StagePanel.SetActive(true);
+                //EnemiesDefeatedPanel.SetActive(true);
+                //GrenadeAmountPanel.SetActive(true);
             }
 
             else // last stage
@@ -41,6 +43,9 @@ public class L3PauseMenuScript : MonoBehaviour
                 LastBattleInstructionsPanel.SetActive(false);
             }
 
+            StagePanel.SetActive(true);
+            EnemiesDefeatedPanel.SetActive(true);
+            GrenadeAmountPanel.SetActive(true);
             resume();
             isGameStarted = true;
 

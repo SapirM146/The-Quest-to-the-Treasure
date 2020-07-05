@@ -10,7 +10,6 @@ namespace UnityStandardAssets.Effects
         public float explosionForce = 4;
         public float range = 5;
         public LayerMask layerMask;
-        L3GameManager gm;
 
 
         private IEnumerator Start()
@@ -20,7 +19,6 @@ namespace UnityStandardAssets.Effects
             yield return null;
 
             float multiplier = GetComponent<ParticleSystemMultiplier>().multiplier;
-            gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<L3GameManager>();
 
             range *= multiplier;
             var cols = Physics.OverlapSphere(transform.position, range, layerMask);
@@ -36,14 +34,6 @@ namespace UnityStandardAssets.Effects
             foreach (var rb in rigidbodies)
             {
                 rb.AddExplosionForce(explosionForce * multiplier, transform.position, range, 1 * multiplier, ForceMode.Impulse);
-                EnemyHPScript enemy = rb.gameObject.GetComponent<EnemyHPScript>();
-                if (enemy != null)
-                {
-                    int amount = 40;
-                    gm.showDamageOnScreen(amount);
-                    enemy.takeDamage(40);
-
-                }
             }
         }
     }

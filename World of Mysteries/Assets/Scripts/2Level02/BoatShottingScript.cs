@@ -13,7 +13,7 @@ public class BoatShottingScript : MonoBehaviour
         if(SwitchModeScript.isBoatMode && Input.GetKeyDown(KeyCode.Space))
         {
             GameObject b = Instantiate(bullet, bulletStartPos.position, Quaternion.identity);
-            b.GetComponent<BulletScript>().origin = this.gameObject;
+            b.GetComponent<BulletScript>().origin = gameObject;
         }
     }
 }

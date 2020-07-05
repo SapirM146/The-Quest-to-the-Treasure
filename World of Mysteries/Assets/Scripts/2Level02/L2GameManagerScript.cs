@@ -131,7 +131,6 @@ public class L2GameManagerScript : MonoBehaviour
         Cursor.visible = true; // show curser
         Time.timeScale = 0f; // stop time
         loseMenu.SetActive(true); // show lose menu
-
     }
 
     IEnumerator winLevel()
