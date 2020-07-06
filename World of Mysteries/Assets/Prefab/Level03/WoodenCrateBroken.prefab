@@ -1010,7 +1010,7 @@ GameObject:
   - component: {fileID: 8078008982722675084}
   - component: {fileID: 5062472067892343710}
   m_Layer: 0
-  m_Name: BrokenWoodenCrate2
+  m_Name: WoodenCrateBroken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1056,7 +1056,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 245f48d016986d64896df1c7607af82c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

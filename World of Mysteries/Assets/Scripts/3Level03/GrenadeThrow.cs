@@ -11,7 +11,8 @@ public class GrenadeThrow : MonoBehaviour
     public int amountToThrow = 3;
     public float reloadTime = 60f;
     public Text grenadeAmountText;
-
+    public Slider slider;
+    
 
     float countdown;
     int currentAmountToThrow;
@@ -20,6 +21,8 @@ public class GrenadeThrow : MonoBehaviour
     {
         currentAmountToThrow = amountToThrow;
         countdown = reloadTime;
+        slider.maxValue = reloadTime;
+        slider.value = 0f;
     }
 
     // Update is called once per frame
@@ -27,13 +30,19 @@ public class GrenadeThrow : MonoBehaviour
     {
         if(currentAmountToThrow == 0)
         {
+            if (!slider.gameObject.activeInHierarchy)
+                slider.gameObject.SetActive(true);
+
             if (countdown > 0)
                 countdown -= Time.deltaTime;
             else
             {
                 currentAmountToThrow = amountToThrow;
                 countdown = reloadTime;
+                slider.gameObject.SetActive(false);
             }
+            //setBar(countdown);
+            setBar(reloadTime - countdown);
         }
 
         if (currentAmountToThrow > 0 && Input.GetMouseButtonDown(1))
@@ -51,5 +60,10 @@ public class GrenadeThrow : MonoBehaviour
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
         rb.AddTorque(new Vector3(30, 20, 10));
+    }
+
+    void setBar(float amount)
+    {
+        slider.value = amount;
     }
 }

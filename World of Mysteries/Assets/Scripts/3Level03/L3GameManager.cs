@@ -29,28 +29,12 @@ public class L3GameManager : MonoBehaviour
     public Text stageText;
     public Text enemiesLeftText;
     AudioSource respawnCountdownSound;
-    AudioSource spawnSound;
     PlayerData playerSave;
 
 
     private void Awake()
     {
-        int currentLevel = SceneManager.GetActiveScene().buildIndex;
-        playerSave = SaveSystem.LoadPlayer();
-
-        //if (player != null && player.Level == currentLevel)
-        //{
-        //    CurrentStage = player.Stage;
-
-        //    if (CurrentStage == lastStage)
-        //        prepareToLastStage();
-        //}
-
-        //else
-        //{
-            playerSave = new PlayerData(SceneManager.GetActiveScene().buildIndex);
-            SaveSystem.SavePlayer(playerSave);
-        //}
+        loadProgress();
     }
 
     // Start is called before the first frame update
@@ -63,10 +47,7 @@ public class L3GameManager : MonoBehaviour
         playerPos = fps.transform;
         playerPos.position = playerDropPointsByStage[CurrentStage].position;
         playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
-
-        AudioSource[] audios = GetComponents<AudioSource>();
-        respawnCountdownSound = audios[0];
-        spawnSound = audios[1];
+        respawnCountdownSound = GetComponent<AudioSource>();
 
         //prepareToLastStage();
 
@@ -151,11 +132,7 @@ public class L3GameManager : MonoBehaviour
 
         stageHandler.showNextStage(++CurrentStage);
 
-        if (playerSave != null)
-        {
-            playerSave.Stage = CurrentStage;
-            SaveSystem.SavePlayer(playerSave);
-        }
+        saveProgress();
 
         fps.mouseLook.noAutoRotate = true;
         //playerHP.maxHealth = (playerHP.maxHealth / CurrentStage) * (2 * CurrentStage); // bigger player health capacity
@@ -163,10 +140,9 @@ public class L3GameManager : MonoBehaviour
         playerPos.position = playerDropPointsByStage[CurrentStage].position;
         playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
         fps.cam.transform.rotation = playerDropPointsByStage[CurrentStage].rotation;
+
         yield return new WaitForSeconds(0.01f);
 
-        //playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
-        //spawnSound.Play();
         fps.mouseLook.noAutoRotate = false;
 
         if (CurrentStage == lastStage)
@@ -205,13 +181,12 @@ public class L3GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None; // unlock cursor
         Cursor.visible = true; // show curser
-        //Time.timeScale = 0f; // stop time        
         GoToWinScene();
     }
 
     void GoToWinScene()
     {
-        //Time.timeScale = 1f;
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -247,9 +222,38 @@ public class L3GameManager : MonoBehaviour
             damageToEnemyCanvas.SetActive(false); // hide the damage canvas
     }
 
+    void loadProgress()
+    {
+        //int currentLevel = SceneManager.GetActiveScene().buildIndex;
+        //playerSave = SaveSystem.LoadPlayer();
+
+        //if (player != null && player.Level == currentLevel)
+        //{
+        //    CurrentStage = player.Stage;
+
+        //    if (CurrentStage == lastStage)
+        //        prepareToLastStage();
+        //}
+
+        //else
+        //{
+        playerSave = new PlayerData(SceneManager.GetActiveScene().buildIndex);
+        SaveSystem.SavePlayer(playerSave);
+        //}
+    }
+
     void saveProgress()
     {
-
+        if (playerSave != null)
+        {
+            playerSave.Stage = CurrentStage;
+            SaveSystem.SavePlayer(playerSave);
+        }
+        else
+        {
+            playerSave = new PlayerData(SceneManager.GetActiveScene().buildIndex, CurrentStage);
+            SaveSystem.SavePlayer(playerSave);
+        }
     }
 
 }
