@@ -29,8 +29,8 @@ public class GunScript : MonoBehaviour
 
     private void shoot()
     {
-        laserShotSound.Play();
         muzzleFlash.Play();
+        laserShotSound.Play();
 
         RaycastHit hit;
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
@@ -43,29 +43,8 @@ public class GunScript : MonoBehaviour
             if (explodable != null)
                 explodable.Explode();
 
-            //else if (hit.collider.CompareTag("Enemy"))
-            //{
-            //    EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
-            //    if (target != null)
-            //    {
-            //        gm.showDamageOnScreen(damage);
-            //        target.takeDamage(damage);
-            //    }
-            //}
-            //else if (hit.collider.CompareTag("EnemyHead"))
-            //{
-            //    EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
-
-            //    if (target != null)
-            //    {
-            //        int amount = damage * 2;
-            //        gm.showDamageOnScreen(amount);
-            //        target.takeDamage(amount);
-            //    }
-            //}
-
-            EnemyHPScript target = hit.transform.GetComponent<EnemyHPScript>();
-            if (target != null)
+            EnemyHPScript enemy = hit.transform.GetComponent<EnemyHPScript>();
+            if (enemy != null)
             {
                 int amount = damage;
 
@@ -73,7 +52,7 @@ public class GunScript : MonoBehaviour
                         amount *= 2;
 
                 gm.showDamageOnScreen(amount);
-                target.takeDamage(amount);
+                enemy.takeDamage(amount);
             }
 
             GameObject impactGO2 = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));

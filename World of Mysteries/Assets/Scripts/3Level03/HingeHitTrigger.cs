@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HingeHitTrigger : MonoBehaviour
 {
@@ -8,7 +6,6 @@ public class HingeHitTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.tag);
         if(other.CompareTag("Player"))
             obstacle.hitPlayer();
     }

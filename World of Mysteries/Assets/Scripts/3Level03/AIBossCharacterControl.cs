@@ -61,9 +61,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                         chargeAtPlayerCoroutine = StartCoroutine(ChargeAtPlayer());
 
                     if (agent.remainingDistance > agent.stoppingDistance)
-                    {
                         character.Move(agent.desiredVelocity, false, false);
-                    }
+                    
                     else
                     {
                         agent.velocity = Vector3.zero;
@@ -75,8 +74,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                             transform.LookAt(agent.destination);
                             animator.SetTrigger("Attack");
                         }
-
-
                     }
                 }
             }

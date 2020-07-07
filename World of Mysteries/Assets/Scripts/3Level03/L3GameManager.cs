@@ -34,7 +34,13 @@ public class L3GameManager : MonoBehaviour
 
     private void Awake()
     {
-        loadProgress();
+        playerSave = SaveSystem.LoadPlayer();
+
+        if (CurrentStage == 0)
+            loadProgress();
+        else
+            saveProgress();
+        
     }
 
     // Start is called before the first frame update
@@ -48,9 +54,6 @@ public class L3GameManager : MonoBehaviour
         playerPos.position = playerDropPointsByStage[CurrentStage].position;
         playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
         respawnCountdownSound = GetComponent<AudioSource>();
-
-        //prepareToLastStage();
-
     }
 
     // Update is called once per frame
@@ -73,7 +76,6 @@ public class L3GameManager : MonoBehaviour
             else if (CurrentStage + 1 <= lastStage && numOfEnemiesLeft == 0 && !isPreparing)
             {
                 isPreparing = true;
-                //prepareToNextStage();
                 StartCoroutine(prepareToNextStageWithSound());
             }
 
@@ -94,48 +96,16 @@ public class L3GameManager : MonoBehaviour
         fps.movementSettings.JumpForce = 500;
     }
 
-    void prepareToNextStage()
-    {
-        //respawnCountdown.Play();
-        // wait 3 seconds
-
-        stageHandler.showNextStage(++CurrentStage);
-
-        if (playerSave != null)
-        {
-            playerSave.Stage = CurrentStage;
-            SaveSystem.SavePlayer(playerSave);
-        }
-
-        //playerHP.maxHealth = (playerHP.maxHealth / CurrentStage) * (2 * CurrentStage); // bigger player health capacity
-        playerHP.heal(playerHP.maxHealth); // fully heal the player
-        playerPos.position = playerDropPointsByStage[CurrentStage].position;
-        playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
-        //playerPos.rotation = Quaternion.identity;
-        fps.cam.transform.rotation = Quaternion.identity;
-
-        if (CurrentStage == lastStage)
-        {
-            pauseMenu.gamePause();
-            prepareToLastStage();
-        }
-
-        isPreparing = false;
-    }
-
     IEnumerator prepareToNextStageWithSound()
     {
         respawnCountdownSound.Play();
-        //playerPos.position = playerDropPointsByStage[CurrentStage+1].position;
-        //playerPos.rotation = playerDropPointsByStage[CurrentStage+1].rotation;
+
         yield return new WaitForSeconds(3f); // wait 3 seconds
 
         stageHandler.showNextStage(++CurrentStage);
-
         saveProgress();
 
         fps.mouseLook.noAutoRotate = true;
-        //playerHP.maxHealth = (playerHP.maxHealth / CurrentStage) * (2 * CurrentStage); // bigger player health capacity
         playerHP.heal(playerHP.maxHealth); // fully heal the player
         playerPos.position = playerDropPointsByStage[CurrentStage].position;
         playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
@@ -170,13 +140,12 @@ public class L3GameManager : MonoBehaviour
         Cursor.visible = true; // show curser
         Time.timeScale = 0f; // stop time
         loseMenu.SetActive(true); // show lose menu
-        loseMenu.GetComponent<AudioSource>().Play();
     }
 
     IEnumerator winLevel()
     {
         pauseMenu.enabled = false;
-
+        saveProgress(true);
         yield return new WaitForSeconds(1f);
 
         Cursor.lockState = CursorLockMode.None; // unlock cursor
@@ -207,7 +176,7 @@ public class L3GameManager : MonoBehaviour
         if(showDamageCoroutine != null)
             StopCoroutine(showDamageCoroutine);
         showDamage = true;
-        damageText.text = "-" + amount; // update damage text (-10 or -20) in red
+        damageText.text = "-" + amount; // update damage to enemy text
         damageToEnemyCanvas.SetActive(true); // show the damage canvas
         showDamageCoroutine = StartCoroutine(hideDamageOnScreen());
     }
@@ -224,36 +193,50 @@ public class L3GameManager : MonoBehaviour
 
     void loadProgress()
     {
-        //int currentLevel = SceneManager.GetActiveScene().buildIndex;
-        //playerSave = SaveSystem.LoadPlayer();
+        int currentLevel = SceneManager.GetActiveScene().buildIndex;
 
-        //if (player != null && player.Level == currentLevel)
-        //{
-        //    CurrentStage = player.Stage;
-
-        //    if (CurrentStage == lastStage)
-        //        prepareToLastStage();
-        //}
-
-        //else
-        //{
-        playerSave = new PlayerData(SceneManager.GetActiveScene().buildIndex);
-        SaveSystem.SavePlayer(playerSave);
-        //}
-    }
-
-    void saveProgress()
-    {
         if (playerSave != null)
         {
-            playerSave.Stage = CurrentStage;
-            SaveSystem.SavePlayer(playerSave);
+            if(playerSave.Level == currentLevel)
+            {
+                CurrentStage = playerSave.Stage;
+
+                if (CurrentStage == lastStage)
+                    prepareToLastStage();
+            }
+
+            else
+            {
+                playerSave.Level = currentLevel;
+                playerSave.Stage = 0;
+                SaveSystem.SavePlayer(playerSave);
+            }
         }
-        else
+        else // no save found
         {
-            playerSave = new PlayerData(SceneManager.GetActiveScene().buildIndex, CurrentStage);
+            playerSave = new PlayerData(currentLevel);
             SaveSystem.SavePlayer(playerSave);
         }
+    }
+
+    void saveProgress(bool isFinished = false)
+    {
+        int currentLevel = SceneManager.GetActiveScene().buildIndex;
+
+        if (playerSave != null)
+        {
+            playerSave.Level = currentLevel;
+            playerSave.Stage = CurrentStage;
+        }
+        else // no save found
+        {
+            playerSave = new PlayerData(currentLevel, CurrentStage);
+        }
+
+        if(CurrentStage == lastStage && isFinished)
+            playerSave.isGameFinished = true;
+
+        SaveSystem.SavePlayer(playerSave);
     }
 
 }

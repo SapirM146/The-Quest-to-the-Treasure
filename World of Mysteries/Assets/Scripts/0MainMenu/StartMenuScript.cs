@@ -2,24 +2,104 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 
 public class StartMenuScript : MonoBehaviour
 {
-    public void PlayLevel()
+    public GameObject overwriteWarningCanvas;
+    public Button selectLevelButton;
+    public Button[] selectStageButtons;
+    int goToLevel;
+    PlayerData playerSave;
+
+    private void Awake()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        goToLevel = SceneManager.GetActiveScene().buildIndex + 1;
+        playerSave = SaveSystem.LoadPlayer();
+        Debug.Log(playerSave.isGameFinished);
+        if (playerSave != null && playerSave.isGameFinished)
+            selectLevelButton.interactable = true;
+    }
+
+    void PlayLevel()
+    {
+        SceneManager.LoadScene(goToLevel);
+    }
+
+    public void Play() 
+    {
+        goToLevel = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (playerSave != null)
+        {
+            overwriteWarningCanvas.SetActive(true);
+        }
+        else
+            PlayLevel();
+    }
+
+    public void StartNewGame() // overwrite the old save
+    {
+        playerSave = new PlayerData(goToLevel);
+        SaveSystem.SavePlayer(playerSave);
+        PlayLevel();
     }
 
     public void Continue()
     {
-        int level = 1;
-        PlayerData player = SaveSystem.LoadPlayer();
+        if (playerSave != null)
+            goToLevel = playerSave.Level;
 
-        if (player != null)
-            level = player.Level;
+        PlayLevel();
+    }
 
-        SceneManager.LoadScene(level);
+    public void SelectLevel1()
+    {
+        SelectLevel(goToLevel);
+    }
+
+    public void SelectLevel2()
+    {
+        goToLevel += 1;
+        SelectLevel(goToLevel);
+    }
+
+    public void SelectLevel3()
+    {
+        goToLevel += 2;
+
+        foreach (Button button in selectStageButtons)
+        {
+            button.interactable = true;
+        }
+    }
+
+    public void SelectStage1()
+    {
+        SelectLevel(goToLevel, 0);
+    }
+
+    public void SelectStage2()
+    {
+        SelectLevel(goToLevel, 1);
+    }
+
+    public void SelectStage3()
+    {
+        SelectLevel(goToLevel, 2);
+    }
+
+    public void SelectStage4()
+    {
+        SelectLevel(goToLevel, 3);
+    }
+
+    void SelectLevel(int level, int stage = 0)
+    {
+        playerSave.Level = level;
+        playerSave.Stage = stage;
+        SaveSystem.SavePlayer(playerSave);
+        PlayLevel();
     }
 
     public void ExitGame()

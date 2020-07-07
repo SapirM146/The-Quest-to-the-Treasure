@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class L2GameManagerScript : MonoBehaviour
 {
-    //public Image hp_bar;
     public static PlayerHPScript playerHP;
     public L2PauseMenuScript pauseMenu;
     public GameObject loseMenu;
@@ -28,8 +27,16 @@ public class L2GameManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        PlayerData player = new PlayerData(SceneManager.GetActiveScene().buildIndex);
-        SaveSystem.SavePlayer(player);
+        int currentLevel = SceneManager.GetActiveScene().buildIndex;
+        PlayerData playerSave = SaveSystem.LoadPlayer();
+
+        if (playerSave != null)
+            playerSave.Level = currentLevel;
+
+        else // no save found
+            playerSave = new PlayerData(currentLevel);
+
+        SaveSystem.SavePlayer(playerSave);
     }
 
     private void Start()

@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HingeObstacle : MonoBehaviour
 {
     public HingeJoint hinge;
-    public float rotationSpeed; // 300, 500, 700, 900, 1000
-    public float force; // 1000
-    public int damage; // 40
-    public PlayerHPScript playerHP; // 40
+    public float rotationSpeed; 
+    public float force; 
+    public int damage; 
+    public PlayerHPScript playerHP; 
    
 
     // Start is called before the first frame update

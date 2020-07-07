@@ -9,12 +9,14 @@ public class PlayerHurtEffect : MonoBehaviour
     Animator hurtAnimator;
     int currentHP;
     AudioSource hurtSound;
-    public AudioClip hurtByBoss;
+    AudioSource hurtBadSound;
 
     private void Awake()
     {
         hurtAnimator = hurtCanvas.GetComponent<Animator>();
-        hurtSound = GetComponent<AudioSource>();
+        AudioSource[] audios = GetComponents<AudioSource>();
+        hurtSound = audios[0];
+        hurtBadSound = audios[1];
         hp = GetComponent<PlayerHPScript>();
         currentHP = hp.CurrentHealth;
     }
@@ -24,13 +26,19 @@ public class PlayerHurtEffect : MonoBehaviour
     {
         int hpCheck = hp.CurrentHealth;
 
-        if (hpCheck < currentHP)
+        if (hpCheck <= currentHP * 0.4)
+        {
+            hurtAnimator.SetTrigger("PlayerGetHit");
+            hurtBadSound.Play();
+        }
+
+        else if (hpCheck < currentHP)
         {
             hurtAnimator.SetTrigger("PlayerGetHit");
             hurtSound.Play();
         }
         
-        currentHP = hp.CurrentHealth;
+        currentHP = hpCheck;
     }
 
 

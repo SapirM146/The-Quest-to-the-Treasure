@@ -19,8 +19,16 @@ public class L1GameManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerData player = new PlayerData(SceneManager.GetActiveScene().buildIndex);
-        SaveSystem.SavePlayer(player);
+        int currentLevel = SceneManager.GetActiveScene().buildIndex;
+        PlayerData playerSave = SaveSystem.LoadPlayer();
+
+        if (playerSave != null)
+            playerSave.Level = currentLevel;
+
+        else // no save found
+            playerSave = new PlayerData(currentLevel);
+        
+        SaveSystem.SavePlayer(playerSave);
     }
 
     // Start is called before the first frame update

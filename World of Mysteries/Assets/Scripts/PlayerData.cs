@@ -6,6 +6,8 @@ public class PlayerData
 {
     public int Level { get; set; }
     public int Stage { get; set; }
+    public bool isGameFinished { get; set; }
+
 
     public PlayerData(int level, int stage=0)
     {

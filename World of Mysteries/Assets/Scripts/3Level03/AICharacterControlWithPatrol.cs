@@ -32,7 +32,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	        agent.updatePosition = true;
             walkSpeed = agent.speed;
             GotoNextPoint();
-            //slash.damage = 0;
         }
 
 
@@ -71,8 +70,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                             transform.LookAt(agent.destination);
                             animator.SetTrigger("Attack");
                         }
-
-                        
                     }
                 }
             }
