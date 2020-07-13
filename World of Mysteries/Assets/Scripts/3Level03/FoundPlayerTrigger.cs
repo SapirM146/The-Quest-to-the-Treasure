@@ -7,6 +7,7 @@ public class FoundPlayerTrigger : MonoBehaviour
 {
     public AICharacterControlWithPatrol ai;
     public bool foundPlayer;
+    [HideInInspector]
     public Transform player;
 
 

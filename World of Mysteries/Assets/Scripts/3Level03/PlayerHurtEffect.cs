@@ -26,16 +26,15 @@ public class PlayerHurtEffect : MonoBehaviour
     {
         int hpCheck = hp.CurrentHealth;
 
-        if (hpCheck <= currentHP * 0.4)
+        if (hpCheck < currentHP)
         {
             hurtAnimator.SetTrigger("PlayerGetHit");
-            hurtBadSound.Play();
-        }
 
-        else if (hpCheck < currentHP)
-        {
-            hurtAnimator.SetTrigger("PlayerGetHit");
-            hurtSound.Play();
+            if (hpCheck <= hp.maxHealth * 0.2)
+                hurtBadSound.Play();
+            
+            else
+                hurtSound.Play();
         }
         
         currentHP = hpCheck;

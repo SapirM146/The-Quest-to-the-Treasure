@@ -6,7 +6,7 @@ public class HingeObstacle : MonoBehaviour
     public float rotationSpeed; 
     public float force; 
     public int damage; 
-    public PlayerHPScript playerHP; 
+    public PlayerHPScript playerHP;
    
 
     // Start is called before the first frame update

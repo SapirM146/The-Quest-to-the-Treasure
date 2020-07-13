@@ -8,8 +8,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class L3GameManager : MonoBehaviour
 {
-    //public int CurrentStage {get; private set;}
-    public int CurrentStage;
+    public int CurrentStage {get; private set;}
+    //public int CurrentStage;
     readonly int lastStage = 3;
     bool isLevelEnded;
     bool showDamage;
@@ -40,7 +40,10 @@ public class L3GameManager : MonoBehaviour
             loadProgress();
         else
             saveProgress();
-        
+
+        playerPos = fps.transform;
+        playerPos.position = playerDropPointsByStage[CurrentStage].position;
+        playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
     }
 
     // Start is called before the first frame update
@@ -50,9 +53,6 @@ public class L3GameManager : MonoBehaviour
         showDamage = false;
         isPreparing = false;
         stageHandler.showNextStage(CurrentStage);
-        playerPos = fps.transform;
-        playerPos.position = playerDropPointsByStage[CurrentStage].position;
-        playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
         respawnCountdownSound = GetComponent<AudioSource>();
     }
 
@@ -111,7 +111,7 @@ public class L3GameManager : MonoBehaviour
         playerPos.rotation = playerDropPointsByStage[CurrentStage].rotation;
         fps.cam.transform.rotation = playerDropPointsByStage[CurrentStage].rotation;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(Time.unscaledDeltaTime);
 
         fps.mouseLook.noAutoRotate = false;
 

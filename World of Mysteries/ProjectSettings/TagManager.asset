@@ -13,6 +13,7 @@ TagManager:
   - GameManager
   - Rock
   - Crate
+  - FPS
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Prop
   - Player
   - Borders
-  - 
+  - Gun
   - 
   - 
   - 

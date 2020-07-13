@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class StartMenuScript : MonoBehaviour
 {
     public GameObject overwriteWarningCanvas;
+    public Button playButton;
     public Button selectLevelButton;
     public Button[] selectStageButtons;
     int goToLevel;
@@ -16,8 +17,11 @@ public class StartMenuScript : MonoBehaviour
     {
         goToLevel = SceneManager.GetActiveScene().buildIndex + 1;
         playerSave = SaveSystem.LoadPlayer();
-        Debug.Log(playerSave.isGameFinished);
-        if (playerSave != null && playerSave.isGameFinished)
+    }
+
+    private void Update()
+    {
+        if (!selectLevelButton.interactable && playerSave != null && playerSave.isGameFinished && playButton.interactable)
             selectLevelButton.interactable = true;
     }
 

@@ -40,7 +40,7 @@ public class BulletScript : MonoBehaviour
             if (enemy != null)
             {
                 cannonSound.Play();
-                enemy.takeDamage(20);
+                enemy.takeDamage(20, origin.transform);
             }
         }
         

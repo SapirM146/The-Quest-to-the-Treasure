@@ -18,6 +18,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
     public bool isPlayerDetected;
     float maxDistance = 200f;
     float lostDistance;
+    bool playerInPursueRange;
     LayerMask layerMask = 1 << 10;     // Bit shift the index of the layer (10) to get a bit mask
 
     public Animator foundTextAnim;
@@ -27,6 +28,7 @@ public class EnemyBoatMotionScript : MonoBehaviour
     private void Start()
     {
         isPlayerDetected = false;
+        playerInPursueRange = false;
         lostDistance = maxDistance + 20f;
         agent = GetComponent<NavMeshAgent>();
         hp = GetComponent<EnemyHPScript>();
@@ -72,42 +74,56 @@ public class EnemyBoatMotionScript : MonoBehaviour
 
             if (Physics.Raycast(sight, out rayHit, maxDistance, layerMask))
             {
-                Debug.DrawLine(sight.origin, rayHit.point, Color.red);
+                Debug.DrawLine(sight.origin, rayHit.point, Color.red); // shows red line to player boat in scene
                 if (!isPlayerDetected && rayHit.collider.CompareTag("Player"))
-                {
-                    isPlayerDetected = true;
-                    agent.autoBraking = true;
-                    agent.stoppingDistance = 70f;
-                    foundTextAnim.SetTrigger("FoundLostPlayer");
-                    agent.SetDestination(player.position);
-                }
+                    foundPlayer();
             }
 
+            Transform origin = hp.damageOrigin;
+            if (!isPlayerDetected && origin != null && origin == player)
+                foundPlayer();
 
             if (isPlayerDetected)
             {
                 float playerDis = Vector3.Distance(player.position, transform.position);
-                //float playerDis = agent.remainingDistance;
 
                 if (playerDis <= agent.stoppingDistance)
                     transform.LookAt(player);
 
                 else if (playerDis < lostDistance)
-                    agent.speed = 30f;
-
-                else // playerDis > lostDistance
                 {
-                    lostTextAnim.SetTrigger("FoundLostPlayer");
-                    agent.stoppingDistance = 5f;
-                    agent.speed = 25f;
-                    isPlayerDetected = false;
-                    agent.autoBraking = false;
-                    GotoNextPoint();
+                    agent.speed = 30f;
+                    playerInPursueRange = true;
                 }
 
+                else if (playerInPursueRange)// playerDis > lostDistance
+                {
+                    playerInPursueRange = false;
+                    lostPlayer();
+                }
                 agent.SetDestination(player.position);
             }
         }
+    }
+
+    public void foundPlayer()
+    {
+        isPlayerDetected = true;
+        agent.autoBraking = true;
+        agent.stoppingDistance = 70f;
+        foundTextAnim.SetTrigger("FoundLostPlayer");
+        agent.SetDestination(player.position);
+    }
+
+    public void lostPlayer()
+    {
+        hp.damageOrigin = null;
+        lostTextAnim.SetTrigger("FoundLostPlayer");
+        agent.stoppingDistance = 5f;
+        agent.speed = 25f;
+        isPlayerDetected = false;
+        agent.autoBraking = false;
+        GotoNextPoint();
     }
 }
 

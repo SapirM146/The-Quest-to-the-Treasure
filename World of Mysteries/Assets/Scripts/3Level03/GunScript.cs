@@ -14,6 +14,13 @@ public class GunScript : MonoBehaviour
     public L3GameManager gm;
 
 
+    private void Awake()
+    {
+        PlayerData playerSave = SaveSystem.LoadPlayer();
+        if(playerSave != null && playerSave.colletedPowerUp)
+            damage *= 2;
+    }
+
     private void Start()
     {
         laserShotSound = GetComponent<AudioSource>();
@@ -22,15 +29,13 @@ public class GunScript : MonoBehaviour
     void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
-        {
             shoot();
-        }
     }
 
     private void shoot()
     {
-        muzzleFlash.Play();
         laserShotSound.Play();
+        muzzleFlash.Play();
 
         RaycastHit hit;
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))

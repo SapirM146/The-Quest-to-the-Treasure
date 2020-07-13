@@ -10,6 +10,8 @@ public class EnemyHPScript : MonoBehaviour
     public int currentHealth;
     public HealthBarScript healthBar;
     public bool isAlive;
+    [HideInInspector]
+    public Transform damageOrigin;
 
 
     // Start is called before the first frame update
@@ -28,17 +30,17 @@ public class EnemyHPScript : MonoBehaviour
         
     }
 
-    public void takeDamage(int damage)
-    {       
-        if (currentHealth > 0)
-        {
-            if (animator != null)
-                animator.SetTrigger("GetHit");
+    public void takeDamage(int damage, Transform origin = null)
+    {
+        if (animator != null)
+            animator.SetTrigger("GetHit");
 
-            currentHealth -= damage;
-            healthBar.setHealth(currentHealth);
-        }
+        currentHealth -= damage;
+        healthBar.setHealth(currentHealth);
 
+        if(origin != null)
+            damageOrigin = origin;
+        
         if (currentHealth <= 0)
             die();
     }

@@ -17,13 +17,12 @@ public class ChestOpenScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!isOpen && other.gameObject.tag == "Player")
+        if(!isOpen && other.gameObject.tag == "FPS")
         {
             isOpen = true;
             AudioSource.PlayClipAtPoint(chestClip, transform.position);
             treasureChestBox.GetComponent<Animation>().Play();
             gm.foundChest();
-            //Destroy(treasureChestBox.gameObject, 2f);
         }
     }
 }

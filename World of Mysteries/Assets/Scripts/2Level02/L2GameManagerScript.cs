@@ -13,6 +13,7 @@ public class L2GameManagerScript : MonoBehaviour
     public GameObject GPS_Arrow;
     public Text ChestsCollectedText;
     public Text EnemiesDefeatedText;
+    public GameObject LastObjectiveCanvas;
 
 
     int numOfChestsFound = 0;
@@ -32,6 +33,7 @@ public class L2GameManagerScript : MonoBehaviour
 
         if (playerSave != null)
             playerSave.Level = currentLevel;
+        
 
         else // no save found
             playerSave = new PlayerData(currentLevel);
@@ -76,6 +78,7 @@ public class L2GameManagerScript : MonoBehaviour
             else if (!GPS_Arrow.activeInHierarchy && allEnemiesDefeated && allChestFounded)
             {
                 GPS_Arrow.SetActive(true);
+                LastObjectiveCanvas.SetActive(true);
             }
         }
     }
