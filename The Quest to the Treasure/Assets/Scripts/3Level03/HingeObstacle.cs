@@ -23,6 +23,4 @@ public class HingeObstacle : MonoBehaviour
     {
         playerHP.takeDamage(damage);
     }
-
-
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerHPScript : MonoBehaviour
 {
@@ -14,12 +12,6 @@ public class PlayerHPScript : MonoBehaviour
     {
         CurrentHealth = maxHealth;
         healthBar.setMaxHealth(maxHealth);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void takeDamage(int damage)

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyHPScript : MonoBehaviour
 {
@@ -24,12 +22,6 @@ public class EnemyHPScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void takeDamage(int damage, Transform origin = null)
     {
         if (animator != null)
@@ -44,7 +36,6 @@ public class EnemyHPScript : MonoBehaviour
         if (currentHealth <= 0)
             die();
     }
-
 
     void die()
     {

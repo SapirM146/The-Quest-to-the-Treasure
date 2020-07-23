@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 
@@ -16,7 +14,6 @@ public class L3PauseMenuScript : MonoBehaviour
     public GameObject StagePanel;
     public GameObject EnemiesDefeatedPanel;
     public GameObject GrenadeAmountPanel;
-    //public GameObject ChestsCollectedPanel;
     public RigidbodyFirstPersonController fps;
 
 
@@ -31,11 +28,7 @@ public class L3PauseMenuScript : MonoBehaviour
         {
             if (!isLastStage)
             {
-                //GetComponent<AudioSource>().Play();
                 instructionsPanel.SetActive(false);
-                //StagePanel.SetActive(true);
-                //EnemiesDefeatedPanel.SetActive(true);
-                //GrenadeAmountPanel.SetActive(true);
             }
 
             else // last stage

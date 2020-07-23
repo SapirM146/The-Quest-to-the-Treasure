@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerHurtEffect : MonoBehaviour
 {
@@ -39,6 +37,4 @@ public class PlayerHurtEffect : MonoBehaviour
         
         currentHP = hpCheck;
     }
-
-
 }

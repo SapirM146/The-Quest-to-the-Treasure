@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BillBoardScript : MonoBehaviour
 {
     private Transform cam;
-
 
     // Update is called once per frame
     void LateUpdate()

@@ -71,19 +71,16 @@ public class L1GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        //Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void RestartLevel()
     {
-        //Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToMainMenu()
     {
-        //Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 }

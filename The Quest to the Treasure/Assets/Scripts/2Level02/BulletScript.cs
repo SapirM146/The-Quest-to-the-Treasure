@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
     Rigidbody rb;
-    //PlayerHPScript playerHP;
     Vector3 startPos;
     int force = 10000;
     int maxDistance = 300;

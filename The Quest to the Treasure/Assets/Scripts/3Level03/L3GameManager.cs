@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,11 +8,11 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class L3GameManager : MonoBehaviour
 {
     public int CurrentStage {get; private set;}
-    //public int CurrentStage;
     readonly int lastStage = 3;
     bool isLevelEnded;
     bool showDamage;
     bool isPreparing;
+    int sumOfDamage;
 
     public L3StageHandler stageHandler;
     public PlayerHPScript playerHP;
@@ -52,6 +51,7 @@ public class L3GameManager : MonoBehaviour
         isLevelEnded = false;
         showDamage = false;
         isPreparing = false;
+        sumOfDamage = 0;
         stageHandler.showNextStage(CurrentStage);
         respawnCountdownSound = GetComponent<AudioSource>();
     }
@@ -176,7 +176,8 @@ public class L3GameManager : MonoBehaviour
         if(showDamageCoroutine != null)
             StopCoroutine(showDamageCoroutine);
         showDamage = true;
-        damageText.text = "-" + amount; // update damage to enemy text
+        sumOfDamage += amount;
+        damageText.text = "-" + sumOfDamage; // update damage to enemy text
         damageToEnemyCanvas.SetActive(true); // show the damage canvas
         showDamageCoroutine = StartCoroutine(hideDamageOnScreen());
     }
@@ -188,7 +189,10 @@ public class L3GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         if (!showDamage)
+        {
             damageToEnemyCanvas.SetActive(false); // hide the damage canvas
+            sumOfDamage = 0;
+        }
     }
 
     void loadProgress()

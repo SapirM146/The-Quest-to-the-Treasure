@@ -6,8 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class SaveSystem
 {
     static string path = Application.persistentDataPath + "/player.sav";
-    //  C:\Users\ {User} \AppData\LocalLow\DefaultCompany\World of Mysteries
-    //  C:\Users\Sapir\AppData\LocalLow\DefaultCompany\World of Mysteries
+    //  C:\Users\ {User} \AppData\LocalLow\DefaultCompany\The Quest to the Treasure
 
     public static void SavePlayer(PlayerData player)
     {
