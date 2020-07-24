@@ -54,7 +54,7 @@ public class GunScript : MonoBehaviour
                 int amount = damage;
 
                 if (hit.collider.CompareTag("EnemyHead"))
-                        amount *= 2;
+                        amount *= 3;
 
                 gm.showDamageOnScreen(amount);
                 enemy.takeDamage(amount);
