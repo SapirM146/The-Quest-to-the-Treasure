@@ -11,6 +11,7 @@ public class L2PauseMenuScript : MonoBehaviour
     public GameObject ChestsCollectedPanel;
     public GameObject EnemiesDefeatedPanel;
     public FirstPersonController fps;
+    public GameObject MapCanvas;
     BoatShottingScript shootingAbility;
     SwitchModeScript modeSwitch;
 
@@ -42,6 +43,11 @@ public class L2PauseMenuScript : MonoBehaviour
                 resume();
             else
                 midGamePause();
+        }
+
+        if (isGameStarted && Input.GetKeyDown(KeyCode.Tab))
+        {
+            MapCanvas.SetActive(!MapCanvas.activeInHierarchy);
         }
     }
 
