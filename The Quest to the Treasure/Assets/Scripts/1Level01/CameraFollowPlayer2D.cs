@@ -9,8 +9,8 @@ public class CameraFollowPlayer2D : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerCollect playerCollect;
 
-    float x_offset = 7.8f;
-    float y_offset = 4.4f;
+    readonly float x_offset = 7.8f;
+    readonly float y_offset = 4.4f;
     float x_CameraPosToPlayerRight;
     float x_CameraPosToPlayerLeft; 
     float y_CameraPosToPlayerUp;

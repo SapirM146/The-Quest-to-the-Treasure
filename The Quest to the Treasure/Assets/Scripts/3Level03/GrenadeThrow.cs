@@ -9,7 +9,6 @@ public class GrenadeThrow : MonoBehaviour
     public float reloadTime = 60f;
     public Text grenadeAmountText;
     public Slider slider;
-    
 
     float countdown;
     int currentAmountToThrow;

@@ -10,7 +10,6 @@ public class MiniMapScript : MonoBehaviour
         Vector3 newPositon = player.position;
         newPositon.y = transform.position.y;
         transform.position = newPositon;
-
         transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f); // rotate with player
     }
 }

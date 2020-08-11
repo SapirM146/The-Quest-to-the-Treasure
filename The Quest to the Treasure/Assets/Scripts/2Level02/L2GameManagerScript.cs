@@ -130,9 +130,6 @@ public class L2GameManagerScript : MonoBehaviour
     {
         pauseMenu.enabled = false;
 
-        // show lose message
-
-
         yield return new WaitForSeconds(0.5f);
 
         //fps.enabled = false;
@@ -152,7 +149,6 @@ public class L2GameManagerScript : MonoBehaviour
         Cursor.visible = true; // show curser
         Time.timeScale = 0f; // stop time
         winMenu.SetActive(true); // show win menu
-
     }
 
     public void GoToNextLevel()

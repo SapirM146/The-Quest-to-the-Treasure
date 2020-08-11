@@ -4,7 +4,7 @@ public class Gem : MonoBehaviour
 {
     PlayerCollect playerCollect;
 
-    private void Update()
+    private void Start()
     {
         playerCollect = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCollect>();
     }

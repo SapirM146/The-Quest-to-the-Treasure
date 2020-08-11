@@ -8,7 +8,7 @@ public class Laser : MonoBehaviour
     public Transform endPoint;
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         laser.SetPosition(0, StartPoint.position);
         laser.SetPosition(1, endPoint.position);

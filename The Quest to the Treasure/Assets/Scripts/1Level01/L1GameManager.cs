@@ -9,7 +9,6 @@ public class L1GameManager : MonoBehaviour
     public GameObject winMenu;
     public L1PauseMenu pauseMenu;
     public PlayerCollect playerCollect;
-    public PlayerMovement playerMovement;
     public GameObject goToExitPanel;
 
     public static bool LevelComplete { get; private set; }

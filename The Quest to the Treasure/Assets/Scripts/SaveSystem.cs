@@ -10,10 +10,13 @@ public static class SaveSystem
 
     public static void SavePlayer(PlayerData player)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Create);
-        formatter.Serialize(stream, player);
-        stream.Close();
+        if (player != null)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Create);
+            formatter.Serialize(stream, player);
+            stream.Close();
+        }
     }
 
     public static PlayerData LoadPlayer()

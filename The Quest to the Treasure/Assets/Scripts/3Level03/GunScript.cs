@@ -26,7 +26,7 @@ public class GunScript : MonoBehaviour
         laserShotSound = GetComponent<AudioSource>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
             shoot();

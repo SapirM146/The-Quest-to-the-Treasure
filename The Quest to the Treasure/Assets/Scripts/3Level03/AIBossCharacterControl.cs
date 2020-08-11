@@ -24,6 +24,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         bool isRunning;
         Coroutine chargeAtPlayerCoroutine;
 
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
 
         private void Start()
         {
@@ -31,9 +35,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             agent = GetComponentInChildren<UnityEngine.AI.NavMeshAgent>();
             hp = GetComponent<EnemyHPScript>();
             character = GetComponent<ThirdPersonCharacter>();
-            animator = GetComponent<Animator>();
             isRunning = false;
-
             agent.updateRotation = false;
             agent.updatePosition = true;
         }
