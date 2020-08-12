@@ -57,18 +57,19 @@ public class StartMenuScript : MonoBehaviour
 
     public void SelectLevel1()
     {
+        goToLevel = SceneManager.GetActiveScene().buildIndex + 1;
         SelectLevel(goToLevel);
     }
 
     public void SelectLevel2()
     {
-        goToLevel += 1;
+        goToLevel = SceneManager.GetActiveScene().buildIndex + 2;
         SelectLevel(goToLevel);
     }
 
     public void SelectLevel3()
     {
-        goToLevel += 2;
+        goToLevel = SceneManager.GetActiveScene().buildIndex + 3;
 
         foreach (Button button in selectStageButtons)
         {
